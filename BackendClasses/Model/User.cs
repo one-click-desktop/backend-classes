@@ -8,5 +8,7 @@ namespace OneClickDesktop.BackendClasses.Model
 {
     class User
     {
+        public string Guid { get; set; }
+        public string JwtToken { get; set; }
     }
 }

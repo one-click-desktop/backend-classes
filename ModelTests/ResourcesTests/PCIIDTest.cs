@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using OneClickDesktop.BackendClasses.Model.Resources;
 
-namespace ModelTests.ResourcesTests
+namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
 {
     [TestFixture]
     class PCIIDTest

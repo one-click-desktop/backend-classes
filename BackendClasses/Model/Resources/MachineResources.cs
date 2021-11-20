@@ -21,5 +21,16 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         {
             GPU = gpu;
         }
+
+        /// <summary>
+        /// Create machine resources from template
+        /// </summary>
+        /// <param name="template">Template resources</param>
+        /// <param name="gpu">Assigned resources</param>
+        public MachineResources(Resources template, GPUId gpu)
+            : base(template.Memory, template.CPUCores, template.Storage)
+        {
+            GPU = gpu;
+        }
     }
 }

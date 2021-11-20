@@ -9,21 +9,26 @@ namespace OneClickDesktop.BackendClasses.Model
     class Session
     {
         public Machine CorrelatedMachine { get; set; }
-        public User CorreletedUser { get; set; }
+        public User CorrelatedUser { get; set; }
         public string SessionGuid { get; set; }
 
-        public Session(string guid, User user, Machine machine = null)
+        public Session(User user, Machine machine = null)
         {
-            SessionGuid = guid;
-            CorreletedUser = user;
+            SessionGuid = "GenerateValidRandomGuidPlease";
+            CorrelatedUser = user;
             CorrelatedMachine = machine;
+        }
+
+        public Session(Session other)
+        {
+            SessionGuid = other.SessionGuid;
+            CorrelatedUser = other.CorrelatedUser;
+            CorrelatedMachine = other.CorrelatedMachine;
         }
 
         public void AttachMachine(Machine machine)
         {
             CorrelatedMachine = machine;
         }
-
-
     }
 }

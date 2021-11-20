@@ -16,7 +16,7 @@ namespace OneClickDesktop.BackendClasses.Model
         public string Name { get; private set; }
         public MachineState State { get; set; }
 
-        public string MachineType { get; private set; }
+        public MachineType MachineType { get; private set; }
 
         public MachineResources UsingResources { get; private set; }
 
@@ -41,7 +41,6 @@ namespace OneClickDesktop.BackendClasses.Model
             State = MachineState.TurnedOff;
         }
 
-
-
+        public void AssignUser(User user) => ConnectedUser = user;
     }
 }

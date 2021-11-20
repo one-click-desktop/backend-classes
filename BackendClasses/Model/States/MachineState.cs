@@ -8,6 +8,11 @@ namespace OneClickDesktop.BackendClasses.Model.States
 {
     enum MachineState
     {
-        TurnedOff = 0
+        TurnedOff = 0,
+        Booting,
+        Free,
+        Reserved,
+        Occupied,
+        WaitingForShutdown
     }
 }

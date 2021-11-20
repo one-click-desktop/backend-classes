@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
-    public abstract class Resources
+    public class Resources
     {
         /// <summary>
         /// Memory in MiB (1024 base)
