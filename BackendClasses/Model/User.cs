@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
-    class User
+    public class User
     {
         public string Guid { get; set; }
         public string JwtToken { get; set; }

@@ -11,7 +11,7 @@ namespace OneClickDesktop.BackendClasses.Model
     /// <summary>
     /// Klasa reprezentują jedną instancję wirtualnej maszyny.
     /// </summary>
-    class Machine
+    public class Machine
     {
         public string Name { get; private set; }
         public MachineState State { get; set; }
@@ -31,7 +31,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <param name="type">Typ maszyny</param>
         /// <param name="resources">Zajmowane zasoby przez maszynę</param>
         /// <param name="parent">Serwer wirtualizacji, na którym jest uruchamiana.</param>
-        public Machine(string name, string type, MachineResources resources, VirtualisationServer parent)
+        public Machine(string name, MachineType type, MachineResources resources, VirtualisationServer parent)
         {
             Name = name;
             MachineType = type;

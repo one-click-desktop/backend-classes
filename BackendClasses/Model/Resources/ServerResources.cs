@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
-    class ServerResources : Resources
+    public class ServerResources : Resources
     {
         /// <summary>
         /// Number of GPU processors

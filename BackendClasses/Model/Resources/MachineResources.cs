@@ -9,7 +9,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
     /// <summary>
     /// Class describing resources used be single virtual machine
     /// </summary>
-    class MachineResources: Resources
+    public class MachineResources: Resources
     {
         /// <summary>
         /// Assigned GPU processor

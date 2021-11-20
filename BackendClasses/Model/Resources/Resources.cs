@@ -24,7 +24,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         public int Storage { get; set; }
 
 
-        public Resources(int memory, int cores, int storage)
+        public TemplateResources(int memory, int cores, int storage)
         {
             Memory = memory;
             CPUCores = cores;

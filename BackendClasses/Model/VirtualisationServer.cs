@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 namespace OneClickDesktop.BackendClasses.Model
 {
     
-    class VirtualisationServer
+    public class VirtualisationServer
     {
         public Dictionary<string, Session> SessionsOnServer { get; set; }
         public ServerResources WholeServerResources { get; set; }
-        public Dictionary<MachineType, MachineResources> TemplateResources { get; set; }
+        public Dictionary<MachineType, TemplateResources> TemplateResources { get; set; }
         public Dictionary<string, Machine> RunningMachines { get; set; }
 
-        public VirtualisationServer(ServerResources wholeResources, Dictionary<MachineType, MachineResources> templates)
+        public VirtualisationServer(ServerResources wholeResources, Dictionary<MachineType, TemplateResources> templates)
         {
             WholeServerResources = wholeResources;
             TemplateResources = templates;
         }
 
-        public void CreateMachine(string name, MachineType)
+        public void CreateMachine(string name, MachineType type)
         {
 
         }

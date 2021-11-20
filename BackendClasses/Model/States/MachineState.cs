@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.States
 {
-    enum MachineState
+    public enum MachineState
     {
         TurnedOff = 0,
         Booting,

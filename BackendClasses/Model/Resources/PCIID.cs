@@ -74,5 +74,17 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
 
             return true;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PCIID pCIID &&
+                   VendorId == pCIID.VendorId &&
+                   DeviceId == pCIID.DeviceId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(VendorId, DeviceId);
+        }
     }
 }

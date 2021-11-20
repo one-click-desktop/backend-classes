@@ -11,7 +11,7 @@ namespace OneClickDesktop.BackendClasses.Model
     /// </summary>
     public class MachineType
     {
-        string type;
+        public string type;
 
         public override bool Equals(object obj)
         {

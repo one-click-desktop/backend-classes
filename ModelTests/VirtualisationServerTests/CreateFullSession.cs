@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneClickDesktop.BackendClasses.ModelTests.VirtualisationServer
+namespace OneClickDesktop.BackendClasses.ModelTests.VirtualisationServerTests
 {
-    [Test]
-    class CountFreeResources
+    class CreateFullSession
     {
     }
 }

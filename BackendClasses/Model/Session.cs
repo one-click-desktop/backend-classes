@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
-    class Session
+    public class Session
     {
         public Machine CorrelatedMachine { get; set; }
         public User CorrelatedUser { get; set; }
