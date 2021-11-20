@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
-    class MachineResources
+    /// <summary>
+    /// Class describing resources used be single virtual machine
+    /// </summary>
+    class MachineResources: Resources
     {
+        /// <summary>
+        /// Assigned GPU processor
+        /// </summary>
+        public GPUId GPU { get; set; }
+
+        public MachineResources(int memory, int cpuCores, int storage, GPUId gpu)
+            : base(memory, cpuCores, storage)
+        {
+            GPU = gpu;
+        }
     }
 }
