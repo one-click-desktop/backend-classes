@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneClickDesktop.Backend.Classes.Model
+namespace OneClickDesktop.BackendClasses.Model
 {
     
     class VirtualisationServer

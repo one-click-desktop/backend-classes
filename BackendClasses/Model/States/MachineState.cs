@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneClickDesktop.Backend.Classes.Model.States
+namespace OneClickDesktop.BackendClasses.Model.States
 {
     enum MachineState
     {

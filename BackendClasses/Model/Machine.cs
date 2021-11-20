@@ -1,12 +1,12 @@
-﻿using OneClickDesktop.Backend.Classes.Model.Resources;
-using OneClickDesktop.Backend.Classes.Model.States;
+﻿using OneClickDesktop.BackendClasses.Model.Resources;
+using OneClickDesktop.BackendClasses.Model.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneClickDesktop.Backend.Classes.Model
+namespace OneClickDesktop.BackendClasses.Model
 {
     /// <summary>
     /// Klasa reprezentują jedną instancję wirtualnej maszyny.
