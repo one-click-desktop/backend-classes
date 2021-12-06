@@ -6,22 +6,43 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
+    /// <summary>
+    /// Class describing resources used by single virtualization server
+    /// </summary>
     public class ServerResources : Resources
     {
         /// <summary>
         /// Number of GPU processors
         /// </summary>
-        public int GPUCount => GPUIds.Count();
+        public int GpuCount => GpuIds.Count;
 
         /// <summary>
-        /// Collection of idetifiers of GPU - every GPU contains multiple PCI ID
+        /// Collection of identifiers of GPU - every GPU contains multiple PCI IDs
         /// </summary>
-        public List<GPUId> GPUIds { get; set; }
-        
-        public ServerResources(int memory, int cpuCores, int storage, IEnumerable<GPUId> gpus)
+        public List<GpuId> GpuIds { get; }
+
+        /// <summary>
+        /// Create server resources from numerical description
+        /// </summary>
+        /// <param name="memory">Amount of memory bytes assigned</param>
+        /// <param name="cpuCores">Amount of CPU cpuCores assigned</param>
+        /// <param name="storage">Amount of storage bytes assigned</param>
+        /// <param name="gpus">List of GPU descriptions</param>
+        public ServerResources(int memory, int cpuCores, int storage, IEnumerable<GpuId> gpus)
             : base(memory, cpuCores, storage)
         {
-            GPUIds = new List<GPUId>(gpus);
+            GpuIds = new List<GpuId>(gpus);
+        }
+
+        /// <summary>
+        /// Create server resources from base resources and GPUs identifiers
+        /// </summary>
+        /// <param name="baseResources">Base resources</param>
+        /// <param name="gpus">List of GPU descriptions</param>
+        public ServerResources(Resources baseResources, IEnumerable<GpuId> gpus)
+            : base(baseResources.Memory, baseResources.CpuCores, baseResources.Storage)
+        {
+            GpuIds = new List<GpuId>(gpus);
         }
     }
 }

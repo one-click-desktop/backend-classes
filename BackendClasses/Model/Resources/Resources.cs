@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
+    /// <summary>
+    /// Class describing basic resources
+    /// </summary>
     public class Resources
     {
         /// <summary>
@@ -16,18 +19,23 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// Number of CPU threads
         /// </summary>
-        public int CPUCores { get; set; }
+        public int CpuCores { get; set; }
 
         /// <summary>
         /// Storage in GiB (1024 base)
         /// </summary>
         public int Storage { get; set; }
 
-
-        public Resources(int memory, int cores, int storage)
+        /// <summary>
+        /// Create resources from numerical description
+        /// </summary>
+        /// <param name="memory">Amount of memory bytes assigned</param>
+        /// <param name="cpuCores">Amount of CPU cpuCores assigned</param>
+        /// <param name="storage">Amount of storage bytes assigned</param>
+        public Resources(int memory, int cpuCores, int storage)
         {
             Memory = memory;
-            CPUCores = cores;
+            CpuCores = cpuCores;
             Storage = storage;
         }
     }

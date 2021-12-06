@@ -10,7 +10,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualisationServerTests
 {
     class BaseVirtualisationServerTest
     {
-        protected VirtualisationServer virtsrv;
+        protected VirtualizationServer virtsrv;
 
         protected MachineType GetMachineType(string type)
         {
@@ -24,24 +24,24 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualisationServerTests
         protected MachineType GetGPUMachineType() => GetMachineType("gpu");
         protected MachineType GetUnknownMachineType() => GetMachineType("wtf");
 
-        protected GPUId GetGtx970()
+        protected GpuId GetGtx970()
         {
             //Teoretycznie można przekazywac tylko procesor graficzny bez wszytskich dodatkow
             //TODO Piotrek! Trzeba z nim porozmawiac
             //                                        GM204                     HD Audio 
-            return new GPUId(new PCIID[] { new PCIID("10de", "13c2"), new PCIID("10de", "0fbb") });
+            return new GpuId(new PciId[] { new PciId("10de", "13c2"), new PciId("10de", "0fbb") });
         }
 
 
 
-        protected VirtualisationServer PrepareVirtualisationServer()
+        protected VirtualizationServer PrepareVirtualisationServer()
         {
-            ServerResources resource = new ServerResources(16 * 1024, 8, 1024, new List<GPUId>() { GetGtx970() });
+            ServerResources resource = new ServerResources(16 * 1024, 8, 1024, new List<GpuId>() { GetGtx970() });
             Dictionary<MachineType, TemplateResources> templates = new Dictionary<MachineType, TemplateResources>();
             templates[GetCPUMachineType()] = new TemplateResources(2 * 1024, 4, 200, false);
             templates[GetGPUMachineType()] = new TemplateResources(4 * 1024, 8, 200, true, GetGtx970());
 
-            return new VirtualisationServer(resource, templates);
+            return new VirtualizationServer(resource, templates);
 
         }
     }

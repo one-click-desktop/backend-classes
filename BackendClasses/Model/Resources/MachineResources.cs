@@ -1,36 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace OneClickDesktop.BackendClasses.Model.Resources
+﻿namespace OneClickDesktop.BackendClasses.Model.Resources
 {
     /// <summary>
-    /// Class describing resources used be single virtual machine
+    /// Class describing resources used by single virtual machine
     /// </summary>
     public class MachineResources: Resources
     {
         /// <summary>
         /// Assigned GPU processor
         /// </summary>
-        public GPUId GPU { get; set; }
+        public GpuId Gpu { get; set; }
 
-        public MachineResources(int memory, int cpuCores, int storage, GPUId gpu)
+        /// <summary>
+        /// Create machine resources from numerical description
+        /// </summary>
+        /// <param name="memory">Amount of memory bytes assigned</param>
+        /// <param name="cpuCores">Amount of CPU cores assigned</param>
+        /// <param name="storage">Amount of storage bytes assigned</param>
+        /// <param name="gpu">GPU assigned</param>
+        public MachineResources(int memory, int cpuCores, int storage, GpuId gpu)
             : base(memory, cpuCores, storage)
         {
-            GPU = gpu;
+            Gpu = gpu;
         }
 
         /// <summary>
         /// Create machine resources from template
         /// </summary>
         /// <param name="template">Template resources</param>
-        /// <param name="gpu">Assigned resources</param>
-        public MachineResources(Resources template, GPUId gpu)
-            : base(template.Memory, template.CPUCores, template.Storage)
+        /// <param name="gpu">GPU assigned</param>
+        public MachineResources(Resources template, GpuId gpu)
+            : base(template.Memory, template.CpuCpuCores, template.Storage)
         {
-            GPU = gpu;
+            Gpu = gpu;
+        }
+
+        /// <summary>
+        /// Create machine resources from template resource containing information about GPU
+        /// </summary>
+        /// <param name="template"></param>
+        public MachineResources(TemplateResources template)
+            : this(template, template.WishedGpuModel)
+        {
+            
         }
     }
 }

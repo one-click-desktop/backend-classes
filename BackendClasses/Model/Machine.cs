@@ -1,46 +1,101 @@
-﻿using OneClickDesktop.BackendClasses.Model.Resources;
+﻿using System;
+using System.Net;
+using OneClickDesktop.BackendClasses.Model.Resources;
 using OneClickDesktop.BackendClasses.Model.States;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
     /// <summary>
-    /// Klasa reprezentują jedną instancję wirtualnej maszyny.
+    /// Single instance of virtual machine
     /// </summary>
-    public class Machine
+    public class Machine: IComparable<Machine>, IEquatable<Machine>
     {
-        public string Name { get; private set; }
+        /// <summary>
+        /// Machine identifier
+        /// </summary>
+        public Guid Guid { get; }
+        
+        /// <summary>
+        /// Current state of machine
+        /// </summary>
         public MachineState State { get; set; }
 
-        public MachineType MachineType { get; private set; }
-
-        public MachineResources UsingResources { get; private set; }
-
-        public User ConnectedUser { get; private set; }
-
-        public VirtualisationServer ParentServer { get; private set; }
+        /// <summary>
+        /// Type of machine
+        /// </summary>
+        public MachineType MachineType { get; }
 
         /// <summary>
-        /// Tworzy maszynę w stanie wyłączonym bez połączonego użytkownika.
+        /// Resources assigned to machine
         /// </summary>
-        /// <param name="name">Nazwa maszyny</param>
-        /// <param name="type">Typ maszyny</param>
-        /// <param name="resources">Zajmowane zasoby przez maszynę</param>
-        /// <param name="parent">Serwer wirtualizacji, na którym jest uruchamiana.</param>
-        public Machine(string name, MachineType type, MachineResources resources, VirtualisationServer parent)
+        public MachineResources UsingResources { get; }
+
+        /// <summary>
+        /// User currently using machine
+        /// </summary>
+        public User ConnectedUser { get; private set; }
+
+        /// <summary>
+        /// IpAddress of machine (for connection)
+        /// </summary>
+        public IPAddress IpAddress { get; private set; }
+        
+        /// <summary>
+        /// Virtualization server hosting machine
+        /// </summary>
+        public VirtualizationServer ParentServer { get; }
+        
+        /// <summary>
+        /// Create machine in OFF state with no user assigned and no ipAddress (can only be assigned after machine starts)
+        /// </summary>
+        /// <param name="type">Machine typey</param>
+        /// <param name="resources">Resources assigned to machine</param>
+        /// <param name="parent">Virtualization server running machine</param>
+        public Machine(MachineType type, MachineResources resources, VirtualizationServer parent)
         {
-            Name = name;
+            Guid = Guid.NewGuid();
             MachineType = type;
             UsingResources = resources;
             ParentServer = parent;
             ConnectedUser = null;
             State = MachineState.TurnedOff;
+            IpAddress = null;
         }
 
+        /// <summary>
+        /// Assign user to machine
+        /// </summary>
+        /// <param name="user">User to assign</param>
         public void AssignUser(User user) => ConnectedUser = user;
+
+        /// <summary>
+        /// Assign IP ipAddress to machine
+        /// </summary>
+        /// <param name="ipAddress">IP address of machine</param>
+        public void AssignAddress(IPAddress ipAddress) => IpAddress = ipAddress;
+        
+        public int CompareTo(Machine other)
+        {
+            if (ReferenceEquals(this, other)) return 0;
+            if (ReferenceEquals(null, other)) return 1;
+            return Guid.CompareTo(other.Guid);
+        }
+
+        public bool Equals(Machine other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Guid.Equals(other.Guid);
+        }
+
+        public override int GetHashCode()
+        {
+            return Guid.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Machine);
+        }
     }
 }

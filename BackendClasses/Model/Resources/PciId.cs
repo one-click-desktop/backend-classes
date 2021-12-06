@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
-    public class PCIID
+    /// <summary>
+    /// Class describing PCI identifier as pair of vendor and device identifiers
+    /// </summary>
+    public class PciId: IEquatable<PciId>
     {
         private string vendorId;
+        private string deviceId;
+        
         /// <summary>
         /// Manufacturer unique id
         /// </summary>
         /// <exception cref="ArgumentException">Vendor ID must be lowercase 4 digit hex number</exception>
+        /// 
         public string VendorId
         {
             get => vendorId;
@@ -23,8 +29,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
                 vendorId = value;
             }
         }
-
-        private string deviceId;
+        
         /// <summary>
         /// Unique Device ID inside manufacturer space
         /// </summary>
@@ -40,15 +45,15 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
             }
         }
 
-        public PCIID (string vendor, string device)
+        /// <summary>
+        /// Create PCIId representation from vendor and device id
+        /// </summary>
+        /// <param name="vendor">vendor id</param>
+        /// <param name="device">device id</param>
+        public PciId (string vendor, string device)
         {
             VendorId = vendor;
             DeviceId = device;
-        }
-
-        public override string ToString()
-        {
-            return $"{VendorId}:{DeviceId}";
         }
 
         /// <summary>
@@ -57,34 +62,34 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// 1. Has 4 characters
         /// 2. Be lowercase hexadecimal number
         /// </summary>
-        /// <param name="text">tetsing string</param>
+        /// <param name="id">id to test</param>
         /// <returns>true - valid id, false - otherwise</returns>
-        public static bool IsValidId(string text)
+        public static bool IsValidId(string id)
         {
-            //has length 4
-            if (text.Length != 4)
-                return false;
+            // has length 4 and is lowercase hexadecimal
+            return id.Length == 4 && id.All(c => c is >= '0' and <= '9' or >= 'a' and <= 'f');
+        }
 
-            //Is lowercase hexadecimal
-            for (int i = 0; i < text.Length; ++i)
-            {
-                if (!((text[i] >= '0' && text[i] <= '9') || (text[i] >= 'a' && text[i] <= 'f')))
-                    return false;
-            }
-
-            return true;
+        public bool Equals(PciId other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return vendorId == other.vendorId && deviceId == other.deviceId;
+        }
+        
+        public override string ToString()
+        {
+            return $"{VendorId}:{DeviceId}";
         }
 
         public override bool Equals(object obj)
         {
-            return obj is PCIID pCIID &&
-                   VendorId == pCIID.VendorId &&
-                   DeviceId == pCIID.DeviceId;
+            return Equals(obj as PciId);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(VendorId, DeviceId);
+            return HashCode.Combine(vendorId, deviceId);
         }
     }
 }
