@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
 
 namespace OneClickDesktop.BackendClasses.Model
@@ -13,7 +13,7 @@ namespace OneClickDesktop.BackendClasses.Model
     {
         private readonly Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
         private readonly Dictionary<Guid, Machine> runningMachines = new Dictionary<Guid, Machine>();
-        private readonly Dictionary<MachineType, TemplateResources> templates;
+        private readonly Dictionary<string, TemplateResources> templateResources;
         
         /// <summary>
         /// Server identifier
@@ -33,6 +33,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Free resources on server
         /// </summary>
+        [JsonIgnore]
         public ServerResources FreeServerResources
         {
             get
@@ -48,9 +49,9 @@ namespace OneClickDesktop.BackendClasses.Model
         }
 
         /// <summary>
-        /// Template resources for machine type
+        /// Template resources for machine Type
         /// </summary>
-        public IReadOnlyDictionary<MachineType, TemplateResources> TemplateResources => templates;
+        public IReadOnlyDictionary<string, TemplateResources> TemplateResources => templateResources;
 
         /// <summary>
         /// Machines running on server
@@ -61,6 +62,30 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Name of RabbitMQ queue for direct communication
         /// </summary>
         public string Queue { get; }
+        
+        /// <summary>
+        /// Json constructor
+        /// </summary>
+        [JsonConstructor]
+        public VirtualizationServer(IReadOnlyDictionary<Guid, Session> sessions,
+                                     IReadOnlyDictionary<Guid, Machine> runningMachines,
+                                     IReadOnlyDictionary<string, TemplateResources> templateResources,
+                                     ServerResources totalServerResources,
+                                     Guid serverGuid,
+                                     string queue)
+        {
+            this.sessions = new Dictionary<Guid, Session>(sessions);
+            this.runningMachines = new Dictionary<Guid, Machine>(runningMachines);
+            this.templateResources = new Dictionary<string, TemplateResources>(templateResources);
+            ServerGuid = serverGuid;
+            TotalServerResources = totalServerResources;
+            Queue = queue;
+            
+            foreach (var machine in this.runningMachines.Values)
+            {
+                machine.ParentServer = this;
+            }
+        }
 
         /// <summary>
         /// Create virtualization server with complete resources and templates
@@ -69,27 +94,27 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <param name="templates">Template resources for use when creating new machines</param>
         /// <param name="queue">Name of RabbitMQ queue</param>
         public VirtualizationServer(ServerResources totalResources,
-                                    IDictionary<MachineType, TemplateResources> templates, string queue)
+                                    IDictionary<string, TemplateResources> templates, string queue)
         {
             ServerGuid = Guid.NewGuid();
             TotalServerResources = totalResources;
             Queue = queue;
-            this.templates = new Dictionary<MachineType, TemplateResources>(templates);
+            this.templateResources = new Dictionary<string, TemplateResources>(templates);
         }
 
         /// <summary>
-        /// Create new machine of specified type with GPU
+        /// Create new machine of specified Type with GPU
         /// </summary>
         /// <param name="type">Type of machine</param>
         /// <param name="gpuId">Identifier of GPU to use. If null - uses GPU from template resources</param>
         /// <returns>Created machine</returns>
-        /// <exception cref="ArgumentException">Invalid machine type</exception>
+        /// <exception cref="ArgumentException">Invalid machine Type</exception>
         public Machine CreateMachine(MachineType type, GpuId gpuId = null)
         {
-            var template = templates.GetValueOrDefault(type, null);
+            var template = templateResources.GetValueOrDefault(type.Type, null);
             if (template == null)
             {
-                throw new ArgumentException("Invalid machine type", nameof(type));
+                throw new ArgumentException("Invalid machine Type", nameof(type));
             }
 
             var resources = gpuId != null

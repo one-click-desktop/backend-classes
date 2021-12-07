@@ -20,7 +20,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.SystemModelTests
         public void ShouldAddServerIfDoesntExist()
         {
             var server = new VirtualizationServer(null, 
-                                                  new Dictionary<MachineType, TemplateResources>(),
+                                                  new Dictionary<string, TemplateResources>(),
                                                   null);
             
             model.UpdateOrAddServer(server);

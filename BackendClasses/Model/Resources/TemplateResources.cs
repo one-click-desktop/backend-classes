@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -14,7 +11,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// Whether or not machine should have GPU attached
         /// </summary>
-        public bool ShouldAttachGpu { get; set; }
+        public bool AttachGpu { get; set; }
         
         /// <summary>
         /// GPU description of GPU to attach (does not guarantee this GPU will be used)
@@ -28,19 +25,20 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <param name="cpuCores">Amount of CPU cpuCores assigned</param>
         /// <param name="storage">Amount of storage bytes assigned</param>
         /// <param name="attachGpu">Attach gpu to machine</param>
-        /// <param name="wishedModel">Description of wished GPU model</param>
-        public TemplateResources(int memory, int cpuCores, int storage, bool attachGpu, GpuId wishedModel = null)
+        /// <param name="wishedGpuModel">Description of wished GPU model</param>
+        [JsonConstructor]
+        public TemplateResources(int memory, int cpuCores, int storage, bool attachGpu, GpuId wishedGpuModel = null)
             : base(memory, cpuCores, storage)
         {
-            ShouldAttachGpu = attachGpu;
-            WishedGpuModel = wishedModel;
+            AttachGpu = attachGpu;
+            WishedGpuModel = wishedGpuModel;
         }
 
         public bool Equals(TemplateResources other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return base.Equals(other) && ShouldAttachGpu == other.ShouldAttachGpu && Equals(WishedGpuModel, other.WishedGpuModel);
+            return base.Equals(other) && AttachGpu == other.AttachGpu && Equals(WishedGpuModel, other.WishedGpuModel);
         }
 
         public override bool Equals(object obj)
@@ -53,7 +51,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(base.GetHashCode(), ShouldAttachGpu, WishedGpuModel);
+            return HashCode.Combine(base.GetHashCode(), AttachGpu, WishedGpuModel);
         }
     }
 }

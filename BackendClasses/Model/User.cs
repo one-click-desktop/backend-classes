@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -31,6 +32,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// </summary>
         /// <param name="guid">User identifier</param>
         /// <param name="jwtToken">User JWT token</param>
+        [JsonConstructor]
         public User(Guid guid, string jwtToken = null)
         {
             Guid = guid;

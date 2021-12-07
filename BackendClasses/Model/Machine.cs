@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
 using OneClickDesktop.BackendClasses.Model.States;
 
@@ -43,12 +44,27 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Virtualization server hosting machine
         /// </summary>
-        public VirtualizationServer ParentServer { get; }
+        [JsonIgnore]
+        public VirtualizationServer ParentServer { get; set; }
+        
+        /// <summary>
+        /// Json constructor
+        /// </summary>
+        [JsonConstructor]
+        public Machine(Guid guid, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, IPAddress ipAddress)
+        {
+            Guid = guid;
+            State = state;
+            MachineType = machineType;
+            UsingResources = usingResources;
+            ConnectedUser = connectedUser;
+            IpAddress = ipAddress;
+        }
         
         /// <summary>
         /// Create machine in OFF state with no user assigned and no ipAddress (can only be assigned after machine starts)
         /// </summary>
-        /// <param name="type">Machine type</param>
+        /// <param name="type">Machine Type</param>
         /// <param name="resources">Resources assigned to machine</param>
         /// <param name="parent">Virtualization server running machine</param>
         public Machine(MachineType type, MachineResources resources, VirtualizationServer parent)
@@ -73,7 +89,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// </summary>
         /// <param name="ipAddress">IP address of machine</param>
         public void AssignAddress(IPAddress ipAddress) => IpAddress = ipAddress;
-        
+
         public int CompareTo(Machine other)
         {
             if (ReferenceEquals(this, other)) return 0;

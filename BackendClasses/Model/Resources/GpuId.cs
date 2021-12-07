@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -16,12 +17,21 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         public List<PciId> PciIdentifiers { get; }
 
         /// <summary>
+        /// Json constructor
+        /// </summary>
+        [JsonConstructor]
+        public GpuId(List<PciId> pciIdentifiers)
+        {
+            PciIdentifiers = pciIdentifiers;
+        }
+
+        /// <summary>
         /// Create GpuId object
         /// </summary>
-        /// <param name="identifiers">List of PCI identifiers</param>
-        public GpuId(IEnumerable<PciId> identifiers)
+        /// <param name="pciIdentifiers">List of PCI identifiers</param>
+        public GpuId(IEnumerable<PciId> pciIdentifiers)
         {
-            PciIdentifiers = new List<PciId>(identifiers);
+            PciIdentifiers = new List<PciId>(pciIdentifiers);
         }
 
         public override string ToString()

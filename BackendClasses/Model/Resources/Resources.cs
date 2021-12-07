@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -32,6 +29,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <param name="memory">Amount of memory bytes assigned</param>
         /// <param name="cpuCores">Amount of CPU cpuCores assigned</param>
         /// <param name="storage">Amount of storage bytes assigned</param>
+        [JsonConstructor]
         public Resources(int memory, int cpuCores, int storage)
         {
             Memory = memory;

@@ -7,17 +7,22 @@ namespace OneClickDesktop.BackendClasses.Model
     /// </summary>
     public class SessionType
     {
-        public string type;
+        public string Type { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is MachineType type &&
-                   this.type == type.type;
+                   this.Type == type.Type;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(type);
+            return HashCode.Combine(Type);
+        }
+
+        public override string ToString()
+        {
+            return Type;
         }
     }
 }

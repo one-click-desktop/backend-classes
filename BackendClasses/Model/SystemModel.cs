@@ -31,10 +31,10 @@ namespace OneClickDesktop.BackendClasses.Model
         public Session GetSessionInfo(Guid sessionGuid) => sessions.GetValueOrDefault(sessionGuid, null);
 
         /// <summary>
-        /// Create new session of type for user
+        /// Create new session of Type for user
         /// </summary>
         /// <param name="user">Session user</param>
-        /// <param name="sessionType">Session type</param>
+        /// <param name="sessionType">Session Type</param>
         /// <returns>Created session</returns>
         public Session CreateSession(User user, SessionType sessionType)
         {

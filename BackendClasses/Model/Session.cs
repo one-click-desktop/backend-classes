@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.States;
 
 namespace OneClickDesktop.BackendClasses.Model
@@ -24,7 +25,7 @@ namespace OneClickDesktop.BackendClasses.Model
         public Guid SessionGuid { get; }
         
         /// <summary>
-        /// Session type
+        /// Session Type
         /// </summary>
         public SessionType SessionType { get; }
         
@@ -32,12 +33,25 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Session state
         /// </summary>
         public SessionState SessionState { get; set; }
+        
+        /// <summary>
+        /// Json constructor
+        /// </summary>
+        [JsonConstructor]
+        public Session(Machine correlatedMachine, User correlatedUser, Guid sessionGuid, SessionType sessionType, SessionState sessionState)
+        {
+            CorrelatedMachine = correlatedMachine;
+            CorrelatedUser = correlatedUser;
+            SessionGuid = sessionGuid;
+            SessionType = sessionType;
+            SessionState = sessionState;
+        }
 
         /// <summary>
-        /// Create session of set type for user and machine
+        /// Create session of set Type for user and machine
         /// </summary>
         /// <param name="user">Session user</param>
-        /// <param name="sessionType">Session type</param>
+        /// <param name="sessionType">Session Type</param>
         /// <param name="machine">Assigned machine (defaults to null)</param>
         public Session(User user, SessionType sessionType, Machine machine = null)
         {

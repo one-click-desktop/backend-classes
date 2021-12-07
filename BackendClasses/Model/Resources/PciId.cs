@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -48,12 +46,13 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// Create PCIId representation from vendor and device id
         /// </summary>
-        /// <param name="vendor">vendor id</param>
-        /// <param name="device">device id</param>
-        public PciId (string vendor, string device)
+        /// <param name="vendorId">vendor id</param>
+        /// <param name="deviceId">device id</param>
+        [JsonConstructor]
+        public PciId (string vendorId, string deviceId)
         {
-            VendorId = vendor;
-            DeviceId = device;
+            VendorId = vendorId;
+            DeviceId = deviceId;
         }
 
         /// <summary>

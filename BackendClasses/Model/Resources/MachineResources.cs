@@ -1,4 +1,6 @@
-﻿namespace OneClickDesktop.BackendClasses.Model.Resources
+﻿using System.Text.Json.Serialization;
+
+namespace OneClickDesktop.BackendClasses.Model.Resources
 {
     /// <summary>
     /// Class describing resources used by single virtual machine
@@ -17,6 +19,7 @@
         /// <param name="cpuCores">Amount of CPU cores assigned</param>
         /// <param name="storage">Amount of storage bytes assigned</param>
         /// <param name="gpu">GPU assigned</param>
+        [JsonConstructor]
         public MachineResources(int memory, int cpuCores, int storage, GpuId gpu)
             : base(memory, cpuCores, storage)
         {

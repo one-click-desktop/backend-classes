@@ -12,7 +12,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             return new MachineType()
             {
-                type = type
+                Type = type
             };
         }
 
@@ -30,9 +30,9 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         protected VirtualizationServer PrepareVirtualizationServer()
         {
             ServerResources resource = new ServerResources(16 * 1024, 8, 1024, new List<GpuId>() { GetGtx970() });
-            Dictionary<MachineType, TemplateResources> templates = new Dictionary<MachineType, TemplateResources>();
-            templates[GetCpuMachineType()] = new TemplateResources(2 * 1024, 4, 200, false);
-            templates[GetGpuMachineType()] = new TemplateResources(4 * 1024, 8, 200, true, GetGtx970());
+            Dictionary<string, TemplateResources> templates = new Dictionary<string, TemplateResources>();
+            templates[GetCpuMachineType().Type] = new TemplateResources(2 * 1024, 4, 200, false);
+            templates[GetGpuMachineType().Type] = new TemplateResources(4 * 1024, 8, 200, true, GetGtx970());
 
             return new VirtualizationServer(resource, templates, null);
 

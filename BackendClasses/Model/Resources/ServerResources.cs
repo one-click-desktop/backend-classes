@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -14,6 +13,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// Number of GPU processors
         /// </summary>
+        [JsonIgnore]
         public int GpuCount => GpuIds.Count;
 
         /// <summary>
@@ -22,16 +22,26 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         public List<GpuId> GpuIds { get; }
 
         /// <summary>
+        /// Json constructor
+        /// </summary>
+        [JsonConstructor]
+        public ServerResources(int memory, int cpuCores, int storage, List<GpuId> gpuIds)
+            : base(memory, cpuCores, storage)
+        {
+            GpuIds = gpuIds;
+        }
+        
+        /// <summary>
         /// Create server resources from numerical description
         /// </summary>
         /// <param name="memory">Amount of memory bytes assigned</param>
         /// <param name="cpuCores">Amount of CPU cpuCores assigned</param>
         /// <param name="storage">Amount of storage bytes assigned</param>
-        /// <param name="gpus">List of GPU descriptions</param>
-        public ServerResources(int memory, int cpuCores, int storage, IEnumerable<GpuId> gpus)
+        /// <param name="gpuIds">List of GPU identifiers</param>
+        public ServerResources(int memory, int cpuCores, int storage, IEnumerable<GpuId> gpuIds)
             : base(memory, cpuCores, storage)
         {
-            GpuIds = new List<GpuId>(gpus);
+            GpuIds = new List<GpuId>(gpuIds);
         }
 
         /// <summary>
