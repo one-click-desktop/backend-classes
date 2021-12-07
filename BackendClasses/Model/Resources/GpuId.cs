@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
@@ -32,7 +33,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return PciIdentifiers.Equals(other.PciIdentifiers);
+            return PciIdentifiers.SequenceEqual(other.PciIdentifiers);
         }
 
         public override int GetHashCode()

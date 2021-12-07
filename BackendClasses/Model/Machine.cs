@@ -48,7 +48,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Create machine in OFF state with no user assigned and no ipAddress (can only be assigned after machine starts)
         /// </summary>
-        /// <param name="type">Machine typey</param>
+        /// <param name="type">Machine type</param>
         /// <param name="resources">Resources assigned to machine</param>
         /// <param name="parent">Virtualization server running machine</param>
         public Machine(MachineType type, MachineResources resources, VirtualizationServer parent)

@@ -7,20 +7,20 @@ namespace OneClickDesktop.BackendClasses.Model
     /// <summary>
     /// Describes abstract system model owned by every overseer
     /// </summary>
-    class SystemModel
+    public class SystemModel
     {
-        private Dictionary<Guid, VirtualizationServer> servers = new Dictionary<Guid, VirtualizationServer>();
-        private Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
+        private readonly Dictionary<Guid, VirtualizationServer> servers = new Dictionary<Guid, VirtualizationServer>();
+        private readonly Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
 
         /// <summary>
-        /// List of virtualization servers in system
+        /// Virtualization servers in system
         /// </summary>
-        public List<VirtualizationServer> Servers => servers.Values.ToList();
-        
+        public IReadOnlyDictionary<Guid, VirtualizationServer> Servers => servers;
+
         /// <summary>
-        /// List of sessions in system
+        /// Sessions in system
         /// </summary>
-        public List<Session> Sessions => sessions.Values.ToList();
+        public IReadOnlyDictionary<Guid, Session> Sessions => sessions;
         
         #region Sessions
         /// <summary>

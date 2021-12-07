@@ -4,7 +4,7 @@ using OneClickDesktop.BackendClasses.Model.Resources;
 namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
 {
     [TestFixture]
-    class PCIIDTest
+    internal class PciIdTest
     {
         [TestCase("asdfgh")]
         public void IsValidId_ToLongId_False(string id)

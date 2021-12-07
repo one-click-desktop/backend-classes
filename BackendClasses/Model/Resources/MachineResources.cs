@@ -29,7 +29,7 @@
         /// <param name="template">Template resources</param>
         /// <param name="gpu">GPU assigned</param>
         public MachineResources(Resources template, GpuId gpu)
-            : base(template.Memory, template.CpuCpuCores, template.Storage)
+            : base(template.Memory, template.CpuCores, template.Storage)
         {
             Gpu = gpu;
         }

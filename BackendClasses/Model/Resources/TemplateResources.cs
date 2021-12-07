@@ -9,7 +9,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
     /// <summary>
     /// Class describing template resources used when creating machine
     /// </summary>
-    public class TemplateResources: Resources
+    public class TemplateResources: Resources, IEquatable<TemplateResources>
     {
         /// <summary>
         /// Whether or not machine should have GPU attached
@@ -34,6 +34,26 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         {
             ShouldAttachGpu = attachGpu;
             WishedGpuModel = wishedModel;
+        }
+
+        public bool Equals(TemplateResources other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return base.Equals(other) && ShouldAttachGpu == other.ShouldAttachGpu && Equals(WishedGpuModel, other.WishedGpuModel);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TemplateResources)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), ShouldAttachGpu, WishedGpuModel);
         }
     }
 }

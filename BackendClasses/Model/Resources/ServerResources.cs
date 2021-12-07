@@ -9,7 +9,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
     /// <summary>
     /// Class describing resources used by single virtualization server
     /// </summary>
-    public class ServerResources : Resources
+    public class ServerResources : Resources, IEquatable<ServerResources>
     {
         /// <summary>
         /// Number of GPU processors
@@ -43,6 +43,26 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
             : base(baseResources.Memory, baseResources.CpuCores, baseResources.Storage)
         {
             GpuIds = new List<GpuId>(gpus);
+        }
+
+        public bool Equals(ServerResources other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return base.Equals(other) && GpuIds.SequenceEqual(other.GpuIds);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ServerResources)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), GpuIds);
         }
     }
 }
