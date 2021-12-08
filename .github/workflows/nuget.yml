@@ -1,0 +1,32 @@
+ame: Nuget Publish
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.x
+      - name: Check if API version changed before pushing packages
+        run: bash scripts/check-version.sh
+        env:
+          BRANCH: ${{ github.ref_name }}
+      - name: Save current package version
+        run: echo "PACKAGE_VER=`cat package.version`" >> $GITHUB_ENV
+      - name: Build solution
+        run: dotnet build -c Release
+      - name: Pack Overseer project
+        run: dotnet pack -c Release -p:Version="$PACKAGE_VER"
+        working-directory: ./BackendClasses
+      - name: Push Overseer nuget
+        run: dotnet nuget push "bin/Release/*.BackendClasses.*.nupkg" --api-key ${{ secrets.NUGET_TOKEN }} --source "https://api.nuget.org/v3/index.json"
+        working-directory: ./BackendClasses
+  
