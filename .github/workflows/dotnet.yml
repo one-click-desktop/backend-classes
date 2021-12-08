@@ -7,9 +7,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -21,3 +19,12 @@ jobs:
         run: dotnet build -c Release
       - name: Run unit tests
         run: dotnet test
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Check if API version changed before pushing packages
+        run: bash scripts/check-version.sh
+        env:
+          BRANCH: ${{ github.base_ref }}
