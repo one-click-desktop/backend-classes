@@ -1,4 +1,4 @@
-ame: Nuget Publish
+Name: Nuget Publish
 
 on:
   push:
