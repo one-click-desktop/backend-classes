@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>OneClickDesktop.BackendClasses</RootNamespace>
+    <AssemblyName>OneClickDesktop.BackendClasses</AssemblyName>
+    <PackageId>OneClickDesktop.BackendClasses</PackageId>
+    <Authors>smogork widomskip</Authors>
+    <Description>Common classes for OneClickDesktop backend</Description>
+    <RepositoryUrl>https://github.com/one-click-desktop/backend-classes</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
