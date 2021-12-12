@@ -27,7 +27,9 @@ namespace OneClickDesktop.BackendClasses.Communication
         public static IReadOnlyDictionary<string, Type> VirtualizationServerReceiveMapping { get; } =
             new Dictionary<string, Type>()
             {
-                
+                {DomainStartupTemplate.MessageTypeName, DomainStartupTemplate.MessageType},
+                {DomainShutdownTemplate.MessageTypeName, DomainShutdownTemplate.MessageType},
+                {SessionCreationTemplate.MessageTypeName, SessionCreationTemplate.MessageType}
             };
     }
 }

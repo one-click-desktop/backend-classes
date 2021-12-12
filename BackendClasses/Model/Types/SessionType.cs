@@ -11,7 +11,7 @@ namespace OneClickDesktop.BackendClasses.Model
 
         public override bool Equals(object obj)
         {
-            return obj is MachineType type &&
+            return obj is SessionType type &&
                    this.Type == type.Type;
         }
 
