@@ -15,8 +15,7 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
             SessionCreationRDTO data = new SessionCreationRDTO()
             {
                 DomainName = "testDomainName",
-                SessionType = new  SessionType() { Type = "testSessionType"},
-                UserGuid = new Guid()
+                PartialSession = new Session(new User(), new SessionType() { Type = "testSessionType"})
             };
 
             string json = JsonSerializer.Serialize(data);
@@ -24,8 +23,8 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
             SessionCreationRDTO res = SessionCreationTemplate.ConversionReceivedData(receivedData);
             
             Assert.IsTrue(res.DomainName == data.DomainName);
-            Assert.IsTrue(res.UserGuid == data.UserGuid);
-            Assert.IsTrue(res.SessionType.Equals(data.SessionType));
+            Assert.IsTrue(res.PartialSession.SessionGuid == data.PartialSession.SessionGuid);
+            Assert.IsTrue(res.PartialSession.SessionType.Equals(data.PartialSession.SessionType));
         }
     }
 }

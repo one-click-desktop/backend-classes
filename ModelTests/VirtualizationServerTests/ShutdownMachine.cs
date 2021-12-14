@@ -20,10 +20,10 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         public void ShouldDeleteMachineFromDictionary()
         {
             var type = GetCpuMachineType();
-            var machine = server.CreateMachine(type);
+            var machine = server.CreateMachine("machine1", type);
             
-            server.DeleteMachine(machine.Guid);
-            Assert.False(server.RunningMachines.ContainsKey(machine.Guid));
+            server.DeleteMachine(machine.Name);
+            Assert.False(server.RunningMachines.ContainsKey(machine.Name));
         }
     }
 }

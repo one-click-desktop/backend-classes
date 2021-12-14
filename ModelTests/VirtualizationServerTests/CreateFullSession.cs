@@ -18,9 +18,9 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         public void ShouldAddMachineToSessionAndAddSessionToDictionary()
         {
             var session = new Session(null, new SessionType());
-            var machine = server.CreateMachine(GetCpuMachineType());
+            var machine = server.CreateMachine("machine1", GetCpuMachineType());
 
-            var fullSession = server.CreateFullSession(session, machine.Guid);
+            var fullSession = server.CreateFullSession(session, machine.Name);
             Assert.NotNull(fullSession.CorrelatedMachine);
             Assert.AreEqual(session, fullSession);
             Assert.That(server.Sessions, Contains.Item(new KeyValuePair<Guid, Session>(session.SessionGuid, session)));
@@ -31,8 +31,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var session = new Session(null, new SessionType());
 
-            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(session, Guid.NewGuid()));
-            Assert.That(ex?.ParamName, Is.EqualTo("machineGuid"));
+            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(session, "machine1"));
+            Assert.That(ex?.ParamName, Is.EqualTo("machineName"));
             Assert.That(ex?.Message, Contains.Substring("Cannot find machine with specified guid on server"));
         }
         
@@ -40,13 +40,13 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         public void ShouldThrowIfMachinePartOfDifferentSession()
         {
             var session = new Session(null, new SessionType());
-            var machine = server.CreateMachine(GetCpuMachineType());
-            var fullSession = server.CreateFullSession(session, machine.Guid);
+            var machine = server.CreateMachine("machine1", GetCpuMachineType());
+            var fullSession = server.CreateFullSession(session, machine.Name);
             
             var newSession = new Session(null, new SessionType());
 
-            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(newSession, machine.Guid));
-            Assert.That(ex?.ParamName, Is.EqualTo("machineGuid"));
+            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(newSession, machine.Name));
+            Assert.That(ex?.ParamName, Is.EqualTo("machineName"));
             Assert.That(ex?.Message, Contains.Substring("Machine already part of session"));
         }
         
@@ -54,11 +54,11 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         public void ShouldThrowIfSessionExistsOnServer()
         {
             var session = new Session(null, new SessionType());
-            var machine = server.CreateMachine(GetCpuMachineType());
+            var machine = server.CreateMachine("machine1", GetCpuMachineType());
 
-            var fullSession = server.CreateFullSession(session, machine.Guid);
+            var fullSession = server.CreateFullSession(session, machine.Name);
 
-            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(session, Guid.NewGuid()));
+            var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(session, "machine2"));
             Assert.That(ex?.ParamName, Is.EqualTo("halfSession"));
             Assert.That(ex?.Message, Contains.Substring("This session already exists on server"));
         }
