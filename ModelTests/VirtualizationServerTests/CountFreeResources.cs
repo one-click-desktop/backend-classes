@@ -23,7 +23,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         [Test]
         public void ShouldReturnResourcesWithoutRunningServers()
         {
-            var machine = server.CreateMachine(GetGpuMachineType());
+            var machine = server.CreateMachine("machine1", GetGpuMachineType());
 
             var freeResources = server.FreeServerResources;
 

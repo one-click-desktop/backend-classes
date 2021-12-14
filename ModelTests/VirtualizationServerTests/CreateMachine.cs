@@ -19,7 +19,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var type = GetUnknownMachineType();
 
-            var ex = Assert.Throws<ArgumentException>(() => server.CreateMachine(type));
+            var ex = Assert.Throws<ArgumentException>(() => server.CreateMachine("machine1", type));
             Assert.That(ex?.ParamName, Is.EqualTo("type"));
             Assert.That(ex?.Message, Contains.Substring("Invalid machine Type"));
         }
@@ -29,9 +29,9 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var type = GetCpuMachineType();
 
-            var machine = server.CreateMachine(type);
+            var machine = server.CreateMachine("machine1", type);
             Assert.AreEqual(server.TemplateResources[type.Type], machine.UsingResources);
-            Assert.That(server.RunningMachines, Contains.Item(new KeyValuePair<Guid, Machine>(machine.Guid, machine)));
+            Assert.That(server.RunningMachines, Contains.Item(new KeyValuePair<string, Machine>(machine.Name, machine)));
         }
     }
 }

@@ -5,8 +5,7 @@ namespace OneClickDesktop.BackendClasses.Communication.RabbitDTOs
 {
     public class SessionCreationRDTO
     {
-        public Guid UserGuid { get; set; }
+        public Session PartialSession { get; set; }
         public string DomainName { get; set; }
-        public SessionType SessionType { get; set; }
     }
 }

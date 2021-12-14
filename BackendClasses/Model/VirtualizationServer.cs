@@ -12,7 +12,7 @@ namespace OneClickDesktop.BackendClasses.Model
     public class VirtualizationServer : IEquatable<VirtualizationServer>, IComparable<VirtualizationServer>
     {
         private readonly Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
-        private readonly Dictionary<Guid, Machine> runningMachines = new Dictionary<Guid, Machine>();
+        private readonly Dictionary<string, Machine> runningMachines = new Dictionary<string, Machine>();
         private readonly Dictionary<string, TemplateResources> templateResources;
         
         /// <summary>
@@ -56,7 +56,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Machines running on server
         /// </summary>
-        public IReadOnlyDictionary<Guid, Machine> RunningMachines => runningMachines;
+        public IReadOnlyDictionary<string, Machine> RunningMachines => runningMachines;
 
         /// <summary>
         /// Name of RabbitMQ queue for direct communication
@@ -68,14 +68,14 @@ namespace OneClickDesktop.BackendClasses.Model
         /// </summary>
         [JsonConstructor]
         public VirtualizationServer(IReadOnlyDictionary<Guid, Session> sessions,
-                                     IReadOnlyDictionary<Guid, Machine> runningMachines,
+                                     IReadOnlyDictionary<string, Machine> runningMachines,
                                      IReadOnlyDictionary<string, TemplateResources> templateResources,
                                      ServerResources totalServerResources,
                                      Guid serverGuid,
                                      string queue)
         {
             this.sessions = new Dictionary<Guid, Session>(sessions);
-            this.runningMachines = new Dictionary<Guid, Machine>(runningMachines);
+            this.runningMachines = new Dictionary<string, Machine>(runningMachines);
             this.templateResources = new Dictionary<string, TemplateResources>(templateResources);
             ServerGuid = serverGuid;
             TotalServerResources = totalServerResources;
@@ -105,11 +105,12 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Create new machine of specified Type with GPU
         /// </summary>
+        /// <param name="name">Machine identifier</param>
         /// <param name="type">Type of machine</param>
         /// <param name="gpuId">Identifier of GPU to use. If null - uses GPU from template resources</param>
         /// <returns>Created machine</returns>
         /// <exception cref="ArgumentException">Invalid machine Type</exception>
-        public Machine CreateMachine(MachineType type, GpuId gpuId = null)
+        public Machine CreateMachine(string name, MachineType type, GpuId gpuId = null)
         {
             var template = templateResources.GetValueOrDefault(type.Type, null);
             if (template == null)
@@ -120,40 +121,40 @@ namespace OneClickDesktop.BackendClasses.Model
             var resources = gpuId != null
                 ? new MachineResources(template, gpuId)
                 : new MachineResources(template);
-            var machine = new Machine(type, resources, this);
-            runningMachines.Add(machine.Guid, machine);
+            var machine = new Machine(name, type, resources, this);
+            runningMachines.Add(machine.Name, machine);
             return machine;
         }
 
         /// <summary>
         /// Delete machine
         /// </summary>
-        /// <param name="machineGuid">Machine identifier</param>
-        public void DeleteMachine(Guid machineGuid) => runningMachines.Remove(machineGuid);
+        /// <param name="name">Machine identifier</param>
+        public void DeleteMachine(string name) => runningMachines.Remove(name);
 
         /// <summary>
         /// Create full session on server with selected machine
         /// </summary>
         /// <param name="halfSession">Partial session (without machine)</param>
-        /// <param name="machineGuid">Machine identifier</param>
+        /// <param name="machineName">Machine identifier</param>
         /// <returns>Session with attached machine</returns>
         /// <exception cref="ArgumentException">Session already on server or invalid guid:
         /// part of other session or doesn't exist</exception>
-        public Session CreateFullSession(Session halfSession, Guid machineGuid)
+        public Session CreateFullSession(Session halfSession, string machineName)
         {
             if (sessions.ContainsKey(halfSession.SessionGuid))
             {
                 throw new ArgumentException("This session already exists on server", nameof(halfSession));
             }
             
-            if (!runningMachines.TryGetValue(machineGuid, out var machine))
+            if (!runningMachines.TryGetValue(machineName, out var machine))
             {
-                throw new ArgumentException("Cannot find machine with specified guid on server", nameof(machineGuid));
+                throw new ArgumentException("Cannot find machine with specified guid on server", nameof(machineName));
             }
 
-            if (sessions.Values.Any(session => machineGuid.Equals(session?.CorrelatedMachine?.Guid)))
+            if (sessions.Values.Any(session => machineName.Equals(session?.CorrelatedMachine?.Name)))
             {
-                throw new ArgumentException("Machine already part of session", nameof(machineGuid));
+                throw new ArgumentException("Machine already part of session", nameof(machineName));
             }
             
             halfSession.AttachMachine(machine);

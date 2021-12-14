@@ -9,12 +9,12 @@ namespace OneClickDesktop.BackendClasses.Model
     /// <summary>
     /// Single instance of virtual machine
     /// </summary>
-    public class Machine: IComparable<Machine>, IEquatable<Machine>
+    public class Machine: IEquatable<Machine>
     {
         /// <summary>
         /// Machine identifier
         /// </summary>
-        public Guid Guid { get; }
+        public string Name { get; }
         
         /// <summary>
         /// Current state of machine
@@ -51,25 +51,26 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Json constructor
         /// </summary>
         [JsonConstructor]
-        public Machine(Guid guid, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, IPAddress ipAddress)
+        public Machine(string name, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, IPAddress ipAddress)
         {
-            Guid = guid;
+            Name = name;
             State = state;
             MachineType = machineType;
             UsingResources = usingResources;
             ConnectedUser = connectedUser;
             IpAddress = ipAddress;
         }
-        
+
         /// <summary>
         /// Create machine in OFF state with no user assigned and no ipAddress (can only be assigned after machine starts)
         /// </summary>
+        /// <param name="name">Machine identifier</param>
         /// <param name="type">Machine Type</param>
         /// <param name="resources">Resources assigned to machine</param>
         /// <param name="parent">Virtualization server running machine</param>
-        public Machine(MachineType type, MachineResources resources, VirtualizationServer parent)
+        public Machine(string name, MachineType type, MachineResources resources, VirtualizationServer parent)
         {
-            Guid = Guid.NewGuid();
+            Name = name;
             MachineType = type;
             UsingResources = resources;
             ParentServer = parent;
@@ -90,23 +91,16 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <param name="ipAddress">IP address of machine</param>
         public void AssignAddress(IPAddress ipAddress) => IpAddress = ipAddress;
 
-        public int CompareTo(Machine other)
-        {
-            if (ReferenceEquals(this, other)) return 0;
-            if (ReferenceEquals(null, other)) return 1;
-            return Guid.CompareTo(other.Guid);
-        }
-
         public bool Equals(Machine other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Guid.Equals(other.Guid);
+            return Name.Equals(other.Name);
         }
 
         public override int GetHashCode()
         {
-            return Guid.GetHashCode();
+            return Name.GetHashCode();
         }
 
         public override bool Equals(object obj)
