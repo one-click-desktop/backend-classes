@@ -42,6 +42,20 @@ namespace OneClickDesktop.BackendClasses.Model
             sessions.Add(session.SessionGuid, session);
             return session;
         }
+        
+        /// <summary>
+        /// Update session or add if didn't exist
+        /// </summary>
+        /// <param name="session">Session to update</param>
+        /// <exception cref="ArgumentNullException">Session is null</exception>
+        public void UpdateOrAddSession(Session session)
+        {
+            if (session == null)
+            {
+                throw new ArgumentNullException(nameof(session));
+            }
+            sessions[session.SessionGuid] = session;
+        }
 
         /// <summary>
         /// Delete session
