@@ -54,6 +54,16 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         {
             GpuIds = new List<GpuId>(gpus);
         }
+        
+        /// <remarks>
+        /// Only use for statistics, since gpuIds don't make sense when outside of server
+        /// </remarks>
+        public static ServerResources operator +(ServerResources r1, ServerResources r2)
+        {
+            return new ServerResources(r1 as Resources + r2, 
+                                       // this is not really correct but needed for GpuCount to work correctly
+                                       new List<GpuId>(r1.GpuIds).Concat(r2.GpuIds));
+        }
 
         public bool Equals(ServerResources other)
         {
