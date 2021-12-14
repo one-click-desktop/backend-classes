@@ -60,7 +60,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// </remarks>
         public static ServerResources operator +(ServerResources r1, ServerResources r2)
         {
-            return new ServerResources(r1 as Resources + r2, 
+            return new ServerResources((r1 as Resources) + r2, 
                                        // this is not really correct but needed for GpuCount to work correctly
                                        new List<GpuId>(r1.GpuIds).Concat(r2.GpuIds));
         }
