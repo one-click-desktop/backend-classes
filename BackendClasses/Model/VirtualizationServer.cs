@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
+using OneClickDesktop.BackendClasses.Model.States;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -158,6 +159,7 @@ namespace OneClickDesktop.BackendClasses.Model
             }
             
             halfSession.AttachMachine(machine);
+            halfSession.SessionState = SessionState.Running;
             sessions.Add(halfSession.SessionGuid, halfSession);
             return halfSession;
         }

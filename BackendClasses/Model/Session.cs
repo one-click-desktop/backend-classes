@@ -79,7 +79,15 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Assign machine to session
         /// </summary>
         /// <param name="machine">Machine for assign</param>
-        public void AttachMachine(Machine machine) => CorrelatedMachine = machine;
+        public void AttachMachine(Machine machine)
+        {
+            if (machine.State != MachineState.Free)
+            {
+                throw new ArgumentException("Machine is not free", nameof(machine));
+            }
+            machine.State = MachineState.Reserved;
+            CorrelatedMachine = machine;
+        }
 
         public int CompareTo(Session other)
         {
