@@ -39,7 +39,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// IpAddress of machine (for connection)
         /// </summary>
-        public IPAddress IpAddress { get; private set; }
+        public MachineAddress? IpAddress { get; private set; }
         
         /// <summary>
         /// Virtualization server hosting machine
@@ -51,7 +51,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Json constructor
         /// </summary>
         [JsonConstructor]
-        public Machine(string name, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, IPAddress ipAddress)
+        public Machine(string name, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, MachineAddress? ipAddress)
         {
             Name = name;
             State = state;
@@ -89,7 +89,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Assign IP ipAddress to machine
         /// </summary>
         /// <param name="ipAddress">IP address of machine</param>
-        public void AssignAddress(IPAddress ipAddress) => IpAddress = ipAddress;
+        public void AssignAddress(MachineAddress ip) => IpAddress = ip;
 
         public bool Equals(Machine other)
         {
