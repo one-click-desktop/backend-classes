@@ -76,6 +76,9 @@ namespace OneClickDesktop.BackendClasses.Model
             {
                 throw new ArgumentNullException(nameof(server));
             }
+
+            var managable = servers.ContainsKey(server.ServerGuid);
+            server.Managable = managable;
             servers[server.ServerGuid] = server;
         }
         #endregion

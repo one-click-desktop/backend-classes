@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using OneClickDesktop.BackendClasses.Model;
+using OneClickDesktop.BackendClasses.Model.States;
 
 namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
 {
@@ -19,11 +20,13 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var session = new Session(null, new SessionType());
             var machine = server.CreateMachine("machine1", GetCpuMachineType());
+            machine.State = MachineState.Free;
 
             var fullSession = server.CreateFullSession(session, machine.Name);
             Assert.NotNull(fullSession.CorrelatedMachine);
             Assert.AreEqual(session, fullSession);
             Assert.That(server.Sessions, Contains.Item(new KeyValuePair<Guid, Session>(session.SessionGuid, session)));
+            Assert.AreEqual(SessionState.Running, fullSession.SessionState);
         }
 
         [Test]
@@ -41,6 +44,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var session = new Session(null, new SessionType());
             var machine = server.CreateMachine("machine1", GetCpuMachineType());
+            machine.State = MachineState.Free; 
+            
             var fullSession = server.CreateFullSession(session, machine.Name);
             
             var newSession = new Session(null, new SessionType());
@@ -55,7 +60,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             var session = new Session(null, new SessionType());
             var machine = server.CreateMachine("machine1", GetCpuMachineType());
-
+            machine.State = MachineState.Free; 
+            
             var fullSession = server.CreateFullSession(session, machine.Name);
 
             var ex = Assert.Throws<ArgumentException>(() => server.CreateFullSession(session, "machine2"));

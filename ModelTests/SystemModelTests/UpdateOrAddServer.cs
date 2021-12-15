@@ -26,6 +26,21 @@ namespace OneClickDesktop.BackendClasses.ModelTests.SystemModelTests
             model.UpdateOrAddServer(server);
             
             Assert.That(model.Servers, Contains.Item(new KeyValuePair<Guid, VirtualizationServer>(server.ServerGuid, server)));
+            Assert.IsFalse(model.Servers[server.ServerGuid].Managable);
+        }
+        
+        [Test]
+        public void ShouldUpdateServerIfExists()
+        {
+            var server = new VirtualizationServer(null, 
+                                                  new Dictionary<string, TemplateResources>(),
+                                                  null);
+            
+            model.UpdateOrAddServer(server);
+            model.UpdateOrAddServer(server);
+            
+            Assert.That(model.Servers, Contains.Item(new KeyValuePair<Guid, VirtualizationServer>(server.ServerGuid, server)));
+            Assert.IsTrue(model.Servers[server.ServerGuid].Managable);
         }
     }
 }

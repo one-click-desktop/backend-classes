@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
+using OneClickDesktop.BackendClasses.Model.States;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -62,6 +63,12 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Name of RabbitMQ queue for direct communication
         /// </summary>
         public string Queue { get; }
+
+        /// <summary>
+        /// Can server be managed (set after 2nd update)
+        /// </summary>
+        [JsonIgnore]
+        public bool Managable { get; set; } = false;
         
         /// <summary>
         /// Json constructor
@@ -158,6 +165,7 @@ namespace OneClickDesktop.BackendClasses.Model
             }
             
             halfSession.AttachMachine(machine);
+            halfSession.SessionState = SessionState.Running;
             sessions.Add(halfSession.SessionGuid, halfSession);
             return halfSession;
         }
