@@ -79,7 +79,7 @@ namespace OneClickDesktop.BackendClasses.Model
                                      IReadOnlyDictionary<string, TemplateResources> templateResources,
                                      ServerResources totalServerResources,
                                      Guid serverGuid,
-                                     string queue)
+                                     string queue )
         {
             this.sessions = new Dictionary<Guid, Session>(sessions);
             this.runningMachines = new Dictionary<string, Machine>(runningMachines);
