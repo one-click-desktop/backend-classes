@@ -63,6 +63,12 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Name of RabbitMQ queue for direct communication
         /// </summary>
         public string Queue { get; }
+
+        /// <summary>
+        /// Can server be managed (set after 2nd update)
+        /// </summary>
+        [JsonIgnore]
+        public bool Managable { get; set; } = false;
         
         /// <summary>
         /// Json constructor
