@@ -15,7 +15,7 @@ namespace OneClickDesktop.BackendClasses.Model
         private readonly Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
         private readonly Dictionary<string, Machine> runningMachines = new Dictionary<string, Machine>();
         private readonly Dictionary<string, TemplateResources> templateResources;
-        
+
         /// <summary>
         /// Server identifier
         /// </summary>
@@ -29,23 +29,45 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Complete resources owned by server
         /// </summary>
-        public ServerResources TotalServerResources { get; }
+        public ServerResources TotalResources { get; }
 
         /// <summary>
-        /// Free resources on server
+        /// Free resources on server (resources not used by any machine)
         /// </summary>
         [JsonIgnore]
-        public ServerResources FreeServerResources
+        public ServerResources FreeResources
         {
             get
             {
-                var machines = runningMachines.Values.ToArray();
+                var machines = runningMachines.Values.Where(machine => machine.State != MachineState.TurnedOff)
+                                              .ToArray();
                 var resources = machines.Select(machine => machine.UsingResources as Resources.Resources)
                                         .DefaultIfEmpty(new Resources.Resources(0, 0, 0))
                                         .Aggregate((resources1, resources2) => resources1 + resources2);
                 var gpusUsed = machines.Select(machine => machine.UsingResources?.Gpu);
-                var gpus = TotalServerResources.GpuIds.Except(gpusUsed);
-                return new ServerResources(TotalServerResources - resources, gpus);
+                var gpus = TotalResources.GpuIds.Except(gpusUsed);
+                return new ServerResources(TotalResources - resources, gpus);
+            }
+        }
+
+        /// <summary>
+        /// Available resources on server (free resources + free machines)
+        /// </summary>
+        [JsonIgnore]
+        public ServerResources AvailableResources
+        {
+            get
+            {
+                var machines = runningMachines.Values
+                                              .Where(machine => machine.State != MachineState.Free &&
+                                                                machine.State != MachineState.TurnedOff
+                                              ).ToArray();
+                var resources = machines.Select(machine => machine.UsingResources as Resources.Resources)
+                                        .DefaultIfEmpty(new Resources.Resources(0, 0, 0))
+                                        .Aggregate((resources1, resources2) => resources1 + resources2);
+                var gpusUsed = machines.Select(machine => machine.UsingResources?.Gpu);
+                var gpus = TotalResources.GpuIds.Except(gpusUsed);
+                return new ServerResources(TotalResources - resources, gpus);
             }
         }
 
@@ -69,25 +91,25 @@ namespace OneClickDesktop.BackendClasses.Model
         /// </summary>
         [JsonIgnore]
         public bool Managable { get; set; } = false;
-        
+
         /// <summary>
         /// Json constructor
         /// </summary>
         [JsonConstructor]
         public VirtualizationServer(IReadOnlyDictionary<Guid, Session> sessions,
-                                     IReadOnlyDictionary<string, Machine> runningMachines,
-                                     IReadOnlyDictionary<string, TemplateResources> templateResources,
-                                     ServerResources totalServerResources,
-                                     Guid serverGuid,
-                                     string queue)
+                                    IReadOnlyDictionary<string, Machine> runningMachines,
+                                    IReadOnlyDictionary<string, TemplateResources> templateResources,
+                                    ServerResources totalResources,
+                                    Guid serverGuid,
+                                    string queue)
         {
             this.sessions = new Dictionary<Guid, Session>(sessions);
             this.runningMachines = new Dictionary<string, Machine>(runningMachines);
             this.templateResources = new Dictionary<string, TemplateResources>(templateResources);
             ServerGuid = serverGuid;
-            TotalServerResources = totalServerResources;
+            TotalResources = totalResources;
             Queue = queue;
-            
+
             foreach (var machine in this.runningMachines.Values)
             {
                 machine.ParentServer = this;
@@ -104,7 +126,7 @@ namespace OneClickDesktop.BackendClasses.Model
                                     IDictionary<string, TemplateResources> templates, string queue)
         {
             ServerGuid = Guid.NewGuid();
-            TotalServerResources = totalResources;
+            TotalResources = totalResources;
             Queue = queue;
             this.templateResources = new Dictionary<string, TemplateResources>(templates);
         }
@@ -153,7 +175,7 @@ namespace OneClickDesktop.BackendClasses.Model
             {
                 throw new ArgumentException("This session already exists on server", nameof(halfSession));
             }
-            
+
             if (!runningMachines.TryGetValue(machineName, out var machine))
             {
                 throw new ArgumentException("Cannot find machine with specified guid on server", nameof(machineName));
@@ -163,7 +185,7 @@ namespace OneClickDesktop.BackendClasses.Model
             {
                 throw new ArgumentException("Machine already part of session", nameof(machineName));
             }
-            
+
             halfSession.AttachMachine(machine);
             halfSession.SessionState = SessionState.Running;
             sessions.Add(halfSession.SessionGuid, halfSession);

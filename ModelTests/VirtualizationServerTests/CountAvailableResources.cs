@@ -7,7 +7,7 @@ using OneClickDesktop.BackendClasses.Model.States;
 namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
 {
     [TestFixture]
-    internal class CountFreeResources : BaseVirtualizationServerTest
+    internal class CountAvailableResources : BaseVirtualizationServerTest
     {
         [SetUp]
         public void SetUp()
@@ -18,14 +18,22 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         [Test]
         public void ShouldReturnAllResourcesIfNoMachineOnServer()
         {
-            Assert.AreEqual(server.TotalResources, server.FreeResources);
+            Assert.AreEqual(server.TotalResources, server.AvailableResources);
         }
         
         [Test]
         public void ShouldReturnAllResourcesIfNoMachineIsRunning()
         {
             server.CreateMachine("machine1", GetGpuMachineType());
-            Assert.AreEqual(server.TotalResources, server.FreeResources);
+            Assert.AreEqual(server.TotalResources, server.AvailableResources);
+        }
+        
+        [Test]
+        public void ShouldReturnAllResourcesIfNoMachineIsTaken()
+        {
+            var machine = server.CreateMachine("machine1", GetGpuMachineType());
+            machine.State = MachineState.Free;
+            Assert.AreEqual(server.TotalResources, server.AvailableResources);
         }
         
 
@@ -35,12 +43,12 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
             var machine = server.CreateMachine("machine1", GetGpuMachineType());
             machine.State = MachineState.Booting;
             
-            var freeResources = server.FreeResources;
+            var availableResources = server.AvailableResources;
 
             var expectedResources = new ServerResources(server.TotalResources - machine.UsingResources, 
                                                         server.TotalResources.GpuIds.
                                                                Except(new List<GpuId>() {machine.UsingResources.Gpu}));
-            Assert.AreEqual(expectedResources, freeResources);
+            Assert.AreEqual(expectedResources, availableResources);
         }
     }
 }
