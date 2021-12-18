@@ -10,4 +10,8 @@
     <RepositoryUrl>https://github.com/one-click-desktop/backend-classes</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
 </Project>
