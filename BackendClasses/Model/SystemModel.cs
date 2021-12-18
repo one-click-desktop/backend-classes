@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -9,10 +8,10 @@ namespace OneClickDesktop.BackendClasses.Model
     /// </summary>
     public class SystemModel
     {
-        private readonly Dictionary<Guid, VirtualizationServer> servers = new Dictionary<Guid, VirtualizationServer>();
+        private readonly SortedDictionary<Guid, VirtualizationServer> servers = new SortedDictionary<Guid, VirtualizationServer>();
         private readonly Dictionary<Guid, Session> sessions = new Dictionary<Guid, Session>();
 
-        /// <summary>
+        /// <summary>L
         /// Virtualization servers in system
         /// </summary>
         public IReadOnlyDictionary<Guid, VirtualizationServer> Servers => servers;
