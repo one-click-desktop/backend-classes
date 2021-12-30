@@ -17,7 +17,8 @@ namespace OneClickDesktop.BackendClasses.Communication
         public static IReadOnlyDictionary<string, Type> OverseerReceiveMapping { get; } =
             new Dictionary<string, Type>()
             {
-                { ModelReportTemplate.MessageTypeName, ModelReportTemplate.MessageType }
+                { ModelReportTemplate.MessageTypeName, ModelReportTemplate.MessageType },
+                { PingTemplate.MessageTypeName, PingTemplate.MessageType}
             };
 
         /// <summary>
@@ -30,7 +31,8 @@ namespace OneClickDesktop.BackendClasses.Communication
                 { DomainStartupTemplate.MessageTypeName, DomainStartupTemplate.MessageType },
                 { DomainShutdownTemplate.MessageTypeName, DomainShutdownTemplate.MessageType },
                 { SessionCreationTemplate.MessageTypeName, SessionCreationTemplate.MessageType },
-                { ModelReportTemplate.MessageTypeName, ModelReportTemplate.MessageType }
+                { ModelReportTemplate.MessageTypeName, ModelReportTemplate.MessageType },
+                { PingTemplate.MessageTypeName, PingTemplate.MessageType}
             };
     }
 }

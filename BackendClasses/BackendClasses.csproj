@@ -14,4 +14,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\net5.0\BackendClasses.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>
