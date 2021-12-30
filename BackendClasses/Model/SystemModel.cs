@@ -61,6 +61,16 @@ namespace OneClickDesktop.BackendClasses.Model
         /// </summary>
         /// <param name="sessionGuid">Session identifier</param>
         public void DeleteSession(Guid sessionGuid) => sessions.Remove(sessionGuid);
+
+        /// <summary>
+        /// Delete multiple sessions
+        /// </summary>
+        /// <param name="sessionGuids">Sessions identifiers</param>
+        public void DeleteSession(IEnumerable<Guid> sessionGuids)
+        {
+            foreach(Guid guid in sessionGuids)
+                DeleteSession(guid);
+        }
         #endregion
         
         #region Servers
@@ -80,6 +90,12 @@ namespace OneClickDesktop.BackendClasses.Model
             server.Managable = managable;
             servers[server.ServerGuid] = server;
         }
+        
+        /// <summary>
+        /// Delete server
+        /// </summary>
+        /// <param name="serverGuid">Server identifier</param>
+        public void DeleteServer(Guid serverGuid) => servers.Remove(serverGuid);
         #endregion
     }
 }
