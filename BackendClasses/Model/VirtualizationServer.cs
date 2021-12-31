@@ -192,6 +192,12 @@ namespace OneClickDesktop.BackendClasses.Model
             return halfSession;
         }
 
+        /// <summary>
+        /// Delete session
+        /// </summary>
+        /// <param name="sessionGuid">Session identifier</param>
+        public void DeleteMachine(Guid sessionGuid) => sessions.Remove(sessionGuid);
+
         public int CompareTo(VirtualizationServer other)
         {
             if (ReferenceEquals(this, other)) return 0;
