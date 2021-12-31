@@ -196,7 +196,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Delete session
         /// </summary>
         /// <param name="sessionGuid">Session identifier</param>
-        public void DeleteMachine(Guid sessionGuid) => sessions.Remove(sessionGuid);
+        public void DeleteSession(Guid sessionGuid) => sessions.Remove(sessionGuid);
 
         public int CompareTo(VirtualizationServer other)
         {
