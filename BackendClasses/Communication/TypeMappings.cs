@@ -31,6 +31,7 @@ namespace OneClickDesktop.BackendClasses.Communication
                 { DomainStartupTemplate.MessageTypeName, DomainStartupTemplate.MessageType },
                 { DomainShutdownTemplate.MessageTypeName, DomainShutdownTemplate.MessageType },
                 { SessionCreationTemplate.MessageTypeName, SessionCreationTemplate.MessageType },
+                { SessionCancelTemplate.MessageTypeName, SessionCancelTemplate.MessageType },
                 { ModelReportTemplate.MessageTypeName, ModelReportTemplate.MessageType },
                 { PingTemplate.MessageTypeName, PingTemplate.MessageType}
             };

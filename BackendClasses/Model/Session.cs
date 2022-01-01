@@ -89,6 +89,15 @@ namespace OneClickDesktop.BackendClasses.Model
             CorrelatedMachine = machine;
         }
 
+        /// <summary>
+        /// Marks session as dead (remove machine and mark to remove)
+        /// </summary>
+        public void DetachMachine()
+        {
+            CorrelatedMachine = null;
+            SessionState = SessionState.WaitingForRemoval;
+        }
+        
         public int CompareTo(Session other)
         {
             if (ReferenceEquals(this, other)) return 0;
