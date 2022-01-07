@@ -35,7 +35,7 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
                     {"testType", new TemplateResources(1, 1, 1, false)}
                 },
                 "queueTestDirect");
-            var m = data.CreateMachine("itsAlive!", new MachineType() {Type = "testType"});
+            var m = data.CreateMachine("itsAlive!", new MachineType() {TechnicalName = "testType"});
             m.AssignAddress(new MachineAddress("localhost", 1234));
             m.State = MachineState.Free;
 

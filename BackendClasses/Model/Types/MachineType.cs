@@ -5,26 +5,33 @@ using System.Text.Json.Serialization;
 namespace OneClickDesktop.BackendClasses.Model
 {
     /// <summary>
-    /// Tymczasowo jest to po prostu string
+    /// Class describing type of domain
     /// </summary>
     public class MachineType
     {
-        public string Type { get; set; }
+        /// <summary>
+        /// Technical named used inside model
+        /// </summary>
+        public string TechnicalName { get; set; }
+        /// <summary>
+        /// Human readable name displaying at frontend
+        /// </summary>
+        public string HumanReadableName { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is MachineType type &&
-                   this.Type == type.Type;
+                   this.TechnicalName == type.TechnicalName;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Type);
+            return HashCode.Combine(TechnicalName);
         }
 
         public override string ToString()
         {
-            return Type;
+            return TechnicalName;
         }
     }
 }

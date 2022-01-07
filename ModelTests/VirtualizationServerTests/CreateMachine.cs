@@ -30,7 +30,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
             var type = GetCpuMachineType();
 
             var machine = server.CreateMachine("machine1", type);
-            Assert.AreEqual(server.TemplateResources[type.Type], machine.UsingResources);
+            Assert.AreEqual(server.TemplateResources[type.TechnicalName], machine.UsingResources);
             Assert.That(server.RunningMachines, Contains.Item(new KeyValuePair<string, Machine>(machine.Name, machine)));
         }
     }
