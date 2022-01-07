@@ -14,7 +14,7 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
             DomainStartupRDTO data = new DomainStartupRDTO()
             {
                 DomainName = "testDomain",
-                DomainType = new MachineType() {Type = "testType"}
+                DomainType = new MachineType() {TechnicalName = "testType"}
             };
 
             string json = JsonSerializer.Serialize(data);

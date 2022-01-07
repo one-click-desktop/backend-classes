@@ -141,7 +141,7 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <exception cref="ArgumentException">Invalid machine Type</exception>
         public Machine CreateMachine(string name, MachineType type, GpuId gpuId = null)
         {
-            var template = templateResources.GetValueOrDefault(type.Type, null);
+            var template = templateResources.GetValueOrDefault(type.TechnicalName, null);
             if (template == null)
             {
                 throw new ArgumentException("Invalid machine Type", nameof(type));
