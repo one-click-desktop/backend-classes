@@ -17,6 +17,16 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Human readable name displaying at frontend
         /// </summary>
         public string HumanReadableName { get; set; }
+        
+        public MachineType()
+        {}
+
+        [JsonConstructor]
+        private MachineType(string technicalName, string humanReadableName)
+        {
+            TechnicalName = technicalName;
+            HumanReadableName = humanReadableName;
+        }
 
         public override bool Equals(object obj)
         {

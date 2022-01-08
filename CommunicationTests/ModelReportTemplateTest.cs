@@ -21,10 +21,10 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
             string json = JsonSerializer.Serialize(data);
             object receivedData = JsonSerializer.Deserialize(json, ModelReportTemplate.MessageType);
             VirtualizationServer res = ModelReportTemplate.ConversionReceivedData(receivedData);
-            
+
             Assert.IsTrue(res.Equals(data));
         }
-        
+
         [Test]
         public void VirtSrvWithBootedMachine()
         {
@@ -32,17 +32,23 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
                 new ServerResources(1, 1, 1, new List<GpuId>()),
                 new Dictionary<string, TemplateResources>()
                 {
-                    {"testType", new TemplateResources(1, 1, 1, false)}
+                    {
+                        "testType",
+                        new TemplateResources(
+                            new MachineType() {TechnicalName = "testType", HumanReadableName = "testTypeHR"},
+                            1, 1, 1, false
+                            )
+                    }
                 },
                 "queueTestDirect");
-            var m = data.CreateMachine("itsAlive!", new MachineType() {TechnicalName = "testType"});
+            var m = data.CreateMachine("itsAlive!", new MachineType() {TechnicalName = "testType", HumanReadableName = "testTypeHR"});
             m.AssignAddress(new MachineAddress("localhost", 1234));
             m.State = MachineState.Free;
 
             string json = JsonSerializer.Serialize(data);
             object receivedData = JsonSerializer.Deserialize(json, ModelReportTemplate.MessageType);
             VirtualizationServer res = ModelReportTemplate.ConversionReceivedData(receivedData);
-            
+
             Assert.IsTrue(res.Equals(data));
             var mData = res.RunningMachines["itsAlive!"];
             Assert.IsTrue(mData.IpAddress.Value.Address == m.IpAddress.Value.Address);

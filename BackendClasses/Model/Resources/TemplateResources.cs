@@ -8,6 +8,8 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
     /// </summary>
     public class TemplateResources: Resources, IEquatable<TemplateResources>
     {
+        public MachineType TemplateType { get; set; }
+        
         /// <summary>
         /// Whether or not machine should have GPU attached
         /// </summary>
@@ -27,9 +29,10 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <param name="attachGpu">Attach gpu to machine</param>
         /// <param name="wishedGpuModel">Description of wished GPU model</param>
         [JsonConstructor]
-        public TemplateResources(int memory, int cpuCores, int storage, bool attachGpu, GpuId wishedGpuModel = null)
+        public TemplateResources(MachineType templateType, int memory, int cpuCores, int storage, bool attachGpu, GpuId wishedGpuModel = null)
             : base(memory, cpuCores, storage)
         {
+            TemplateType = templateType;
             AttachGpu = attachGpu;
             WishedGpuModel = wishedGpuModel;
         }
