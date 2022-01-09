@@ -14,13 +14,13 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// List of PCI identifiers
         /// </summary>
-        public List<PciId> PciIdentifiers { get; }
+        public List<PciAddressId> PciIdentifiers { get; }
 
         /// <summary>
         /// Json constructor
         /// </summary>
         [JsonConstructor]
-        public GpuId(List<PciId> pciIdentifiers)
+        public GpuId(List<PciAddressId> pciIdentifiers)
         {
             PciIdentifiers = pciIdentifiers;
         }
@@ -29,9 +29,9 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// Create GpuId object
         /// </summary>
         /// <param name="pciIdentifiers">List of PCI identifiers</param>
-        public GpuId(IEnumerable<PciId> pciIdentifiers)
+        public GpuId(IEnumerable<PciAddressId> pciIdentifiers)
         {
-            PciIdentifiers = new List<PciId>(pciIdentifiers);
+            PciIdentifiers = new List<PciAddressId>(pciIdentifiers);
         }
 
         public override string ToString()

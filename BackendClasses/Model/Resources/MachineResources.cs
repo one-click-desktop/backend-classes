@@ -42,7 +42,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// </summary>
         /// <param name="template"></param>
         public MachineResources(TemplateResources template)
-            : this(template, template.WishedGpuModel)
+            : this(template, null)
         {
             
         }

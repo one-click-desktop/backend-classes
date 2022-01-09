@@ -9,7 +9,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("asdfgh")]
         public void IsValidId_ToLongId_False(string id)
         {
-            var res = PciId.IsValidId(id);
+            var res = PciAddressId.IsValidId(id);
 
             Assert.IsFalse(res);
         }
@@ -17,7 +17,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("asdf")]
         public void IsValidId_4CharNonHex_False(string id)
         {
-            var res = PciId.IsValidId(id);
+            var res = PciAddressId.IsValidId(id);
 
             Assert.IsFalse(res);
         }
@@ -25,7 +25,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("12Ac")]
         public void IsValidId_4CharNonLowercaseHex_False(string id)
         {
-            var res = PciId.IsValidId(id);
+            var res = PciAddressId.IsValidId(id);
 
             Assert.IsFalse(res);
         }
@@ -33,7 +33,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("12ac")]
         public void IsValidId_4CharLowercaseHex_True(string id)
         {
-            var res = PciId.IsValidId(id);
+            var res = PciAddressId.IsValidId(id);
 
             Assert.IsTrue(res);
         }
@@ -41,7 +41,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("10de", "13c2")]
         public void ToString_FormatTest(string vendor, string device)
         {
-            PciId gm204 = new PciId(vendor, device);
+            PciAddressId gm204 = new PciAddressId(vendor, device);
 
             string res = gm204.ToString();
 
@@ -52,8 +52,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("10de", "13c2")]
         public void Equals_SameIds_Success(string vendor, string device)
         {
-            PciId id1 = new PciId(vendor, device);
-            PciId id2 = new PciId(vendor, device);
+            PciAddressId id1 = new PciAddressId(vendor, device);
+            PciAddressId id2 = new PciAddressId(vendor, device);
 
 
             bool check = id1.Equals(id2);
@@ -63,8 +63,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("10de", "13c2")]
         public void Equals_DifferentIds_Failure(string vendor, string device)
         {
-            PciId id1 = new PciId(vendor, device);
-            PciId id2 = new PciId(device, vendor);
+            PciAddressId id1 = new PciAddressId(vendor, device);
+            PciAddressId id2 = new PciAddressId(device, vendor);
 
 
             bool check = id1.Equals(id2);
@@ -74,8 +74,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("10de", "13c2")]
         public void GetHashCode_SameIds_Success(string vendor, string device)
         {
-            PciId id1 = new PciId(vendor, device);
-            PciId id2 = new PciId(vendor, device);
+            PciAddressId id1 = new PciAddressId(vendor, device);
+            PciAddressId id2 = new PciAddressId(vendor, device);
 
             int hash1 = id1.GetHashCode();
             int hash2 = id2.GetHashCode();
@@ -87,8 +87,8 @@ namespace OneClickDesktop.BackendClasses.ModelTests.ResourcesTests
         [TestCase("10de", "13c2")]
         public void GetHashCode_DifferentIds_Failure(string vendor, string device)
         {
-            PciId id1 = new PciId(vendor, device);
-            PciId id2 = new PciId(device, vendor);
+            PciAddressId id1 = new PciAddressId(vendor, device);
+            PciAddressId id2 = new PciAddressId(device, vendor);
 
             int hash1 = id1.GetHashCode();
             int hash2 = id2.GetHashCode();

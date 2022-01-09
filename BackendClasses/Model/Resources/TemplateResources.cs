@@ -18,7 +18,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// GPU description of GPU to attach (does not guarantee this GPU will be used)
         /// </summary>
-        public GpuId WishedGpuModel { get; set; }
+        public string WishedGpuModel { get; set; }
 
         /// <summary>
         /// Create template resources from numerical description
@@ -29,7 +29,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <param name="attachGpu">Attach gpu to machine</param>
         /// <param name="wishedGpuModel">Description of wished GPU model</param>
         [JsonConstructor]
-        public TemplateResources(MachineType templateType, int memory, int cpuCores, int storage, bool attachGpu, GpuId wishedGpuModel = null)
+        public TemplateResources(MachineType templateType, int memory, int cpuCores, int storage, bool attachGpu, string wishedGpuModel = null)
             : base(memory, cpuCores, storage)
         {
             TemplateType = templateType;

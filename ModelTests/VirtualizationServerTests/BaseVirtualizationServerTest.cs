@@ -25,7 +25,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             //Teoretycznie można przekazywac tylko procesor graficzny bez wszytskich dodatkow
             //                                        GM204                     HD Audio 
-            return new GpuId(new PciId[] { new PciId("10de", "13c2"), new PciId("10de", "0fbb") });
+            return new GpuId(new PciAddressId[] { new PciAddressId("10de", "13c2"), new PciAddressId("10de", "0fbb") });
         }
 
         protected VirtualizationServer PrepareVirtualizationServer()
