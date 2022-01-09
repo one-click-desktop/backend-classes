@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
-using OneClickDesktop.BackendClasses.Communication.MessagesTemplates;
-using OneClickDesktop.BackendClasses.Model;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.Communication.RabbitDTOs
 {

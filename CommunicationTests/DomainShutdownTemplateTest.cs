@@ -18,7 +18,7 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
             string json = JsonSerializer.Serialize(data);
             object receivedData = JsonSerializer.Deserialize(json, DomainShutdownTemplate.MessageType);
             DomainShutdownRDTO res = DomainShutdownTemplate.ConversionReceivedData(receivedData);
-            
+
             Assert.IsTrue(res.DomainName == data.DomainName);
         }
     }

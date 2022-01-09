@@ -1,4 +1,3 @@
-using System;
 using OneClickDesktop.BackendClasses.Model;
 
 namespace OneClickDesktop.BackendClasses.Communication.RabbitDTOs
@@ -13,7 +12,7 @@ namespace OneClickDesktop.BackendClasses.Communication.RabbitDTOs
         /// </summary>
         public Session PartialSession { get; set; }
         /// <summary>
-        /// Machine askedn to attach to session
+        /// Machine wished to attach to session
         /// </summary>
         public string DomainName { get; set; }
     }
