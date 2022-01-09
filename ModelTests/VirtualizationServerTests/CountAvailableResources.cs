@@ -12,41 +12,41 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         [SetUp]
         public void SetUp()
         {
-            server = PrepareVirtualizationServer();
+            Server = PrepareVirtualizationServer();
         }
 
         [Test]
         public void ShouldReturnAllResourcesIfNoMachineOnServer()
         {
-            Assert.AreEqual(server.TotalResources, server.AvailableResources);
+            Assert.AreEqual(Server.TotalResources, Server.AvailableResources);
         }
         
         [Test]
         public void ShouldReturnAllResourcesIfNoMachineIsRunning()
         {
-            server.CreateMachine("machine1", GetGpuMachineType());
-            Assert.AreEqual(server.TotalResources, server.AvailableResources);
+            Server.CreateMachine("machine1", GetGpuMachineType());
+            Assert.AreEqual(Server.TotalResources, Server.AvailableResources);
         }
         
         [Test]
         public void ShouldReturnAllResourcesIfNoMachineIsTaken()
         {
-            var machine = server.CreateMachine("machine1", GetGpuMachineType());
+            var machine = Server.CreateMachine("machine1", GetGpuMachineType());
             machine.State = MachineState.Free;
-            Assert.AreEqual(server.TotalResources, server.AvailableResources);
+            Assert.AreEqual(Server.TotalResources, Server.AvailableResources);
         }
         
 
         [Test]
         public void ShouldReturnResourcesWithoutRunningServers()
         {
-            var machine = server.CreateMachine("machine1", GetGpuMachineType());
+            var machine = Server.CreateMachine("machine1", GetGpuMachineType());
             machine.State = MachineState.Booting;
             
-            var availableResources = server.AvailableResources;
+            var availableResources = Server.AvailableResources;
 
-            var expectedResources = new ServerResources(server.TotalResources - machine.UsingResources, 
-                                                        server.TotalResources.GpuIds.
+            var expectedResources = new ServerResources(Server.TotalResources - machine.UsingResources, 
+                                                        Server.TotalResources.GpuIds.
                                                                Except(new List<GpuId>() {machine.UsingResources.Gpu}));
             Assert.AreEqual(expectedResources, availableResources);
         }

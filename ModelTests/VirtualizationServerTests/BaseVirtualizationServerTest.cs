@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using OneClickDesktop.BackendClasses.Model;
 using OneClickDesktop.BackendClasses.Model.Resources;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
 {
     internal class BaseVirtualizationServerTest
     {
-        protected VirtualizationServer server;
+        protected VirtualizationServer Server;
         
         protected MachineType GetMachineType(string type)
         {
@@ -25,7 +26,7 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         {
             //Teoretycznie można przekazywac tylko procesor graficzny bez wszytskich dodatkow
             //                                        GM204                     HD Audio 
-            return new GpuId(new PciAddressId[] { new PciAddressId("0000","10de", "13", "2"), new PciAddressId("0000","10de", "0f", "1") });
+            return new GpuId(new PciAddressId[] { new ("0000","10de", "13", "2"), new ("0000","10de", "0f", "1") });
         }
 
         protected VirtualizationServer PrepareVirtualizationServer()
@@ -36,7 +37,6 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
             templates[GetGpuMachineType().TechnicalName] = new TemplateResources(GetGpuMachineType(),4 * 1024, 8, 200, true);
 
             return new VirtualizationServer(resource, templates, null);
-
         }
     }
 }

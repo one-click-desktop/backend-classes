@@ -18,7 +18,7 @@ namespace OneClickDesktop.BackendClasses.Model.Types
         public string HumanReadableName { get; set; }
 
         /// <summary>
-        /// Checks if other object object is equal to this one. Checks if all fields are equal
+        /// Checks if other object is equal to this one. Checks if all fields are equal
         /// </summary>
         /// <param name="obj">Object to check against</param>
         /// <returns>True if objects are equal, otherwise false</returns>

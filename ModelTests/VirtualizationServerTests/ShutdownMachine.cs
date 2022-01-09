@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
 {
@@ -13,17 +8,17 @@ namespace OneClickDesktop.BackendClasses.ModelTests.VirtualizationServerTests
         [SetUp]
         public void SetUp()
         {
-            server = PrepareVirtualizationServer();
+            Server = PrepareVirtualizationServer();
         }
 
         [Test]
         public void ShouldDeleteMachineFromDictionary()
         {
             var type = GetCpuMachineType();
-            var machine = server.CreateMachine("machine1", type);
-            
-            server.DeleteMachine(machine.Name);
-            Assert.False(server.RunningMachines.ContainsKey(machine.Name));
+            var machine = Server.CreateMachine("machine1", type);
+
+            Server.DeleteMachine(machine.Name);
+            Assert.False(Server.RunningMachines.ContainsKey(machine.Name));
         }
     }
 }

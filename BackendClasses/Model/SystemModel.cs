@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.Model
 {

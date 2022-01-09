@@ -54,8 +54,8 @@ namespace OneClickDesktop.BackendClasses.CommunicationTests
 
             Assert.IsTrue(res.Equals(data));
             var mData = res.RunningMachines["itsAlive!"];
-            Assert.IsTrue(mData.IpAddress.Value.Address == m.IpAddress.Value.Address);
-            Assert.IsTrue(mData.IpAddress.Value.Port == m.IpAddress.Value.Port);
+            Assert.IsTrue(mData.IpAddress?.Address == m.IpAddress?.Address);
+            Assert.IsTrue(mData.IpAddress?.Port == m.IpAddress?.Port);
             Assert.IsTrue(mData.State == m.State);
         }
     }
