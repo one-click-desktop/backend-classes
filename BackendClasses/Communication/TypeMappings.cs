@@ -5,14 +5,12 @@ using OneClickDesktop.BackendClasses.Communication.MessagesTemplates;
 namespace OneClickDesktop.BackendClasses.Communication
 {
     /// <summary>
-    /// Klasa zawiera mappingi nazw do typów przesyłanych wiadomości.
-    /// Potrzebne do komunikacji poprzez rabbita.
+    /// Contains mapping from names to message types. Required for RabbitMQ communication
     /// </summary>
     public static class TypeMappings
     {
         /// <summary>
-        /// Słownik opisuje mapowanie nazw otrzymywanych waidomości przez overseera
-        /// do oczekiwanych typów danych transportowanych w paczkach
+        /// Contains mapping from names of messages received by overseer to types of data in message body
         /// </summary>
         public static IReadOnlyDictionary<string, Type> OverseerReceiveMapping { get; } =
             new Dictionary<string, Type>()
@@ -22,8 +20,7 @@ namespace OneClickDesktop.BackendClasses.Communication
             };
 
         /// <summary>
-        /// Słownik opisuje mapowanie nazw otrzymywanych waidomości przez virtserver
-        /// do oczekiwanych typów danych transportowanych w paczkach
+        /// Contains mapping from names of messages received by virtServer to types of data in message body
         /// </summary>
         public static IReadOnlyDictionary<string, Type> VirtualizationServerReceiveMapping { get; } =
             new Dictionary<string, Type>()

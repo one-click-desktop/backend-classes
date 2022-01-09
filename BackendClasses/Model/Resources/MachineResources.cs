@@ -5,7 +5,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
     /// <summary>
     /// Class describing resources used by single virtual machine
     /// </summary>
-    public class MachineResources: Resources
+    public class MachineResources : Resources
     {
         /// <summary>
         /// Assigned GPU processor
@@ -27,7 +27,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         }
 
         /// <summary>
-        /// Create machine resources from template
+        /// Create machine resources from template and GPU information
         /// </summary>
         /// <param name="template">Template resources</param>
         /// <param name="gpu">GPU assigned</param>
@@ -40,11 +40,10 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <summary>
         /// Create machine resources from template resource containing information about GPU
         /// </summary>
-        /// <param name="template"></param>
+        /// <param name="template">Template resource</param>
         public MachineResources(TemplateResources template)
-            : this(template, template.WishedGpuModel)
+            : this(template, null)
         {
-            
         }
     }
 }

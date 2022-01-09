@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Net;
 using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
 using OneClickDesktop.BackendClasses.Model.States;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
     /// <summary>
     /// Single instance of virtual machine
     /// </summary>
-    public class Machine: IEquatable<Machine>
+    public class Machine : IEquatable<Machine>
     {
         /// <summary>
         /// Machine identifier
         /// </summary>
         public string Name { get; }
-        
+
         /// <summary>
         /// Current state of machine
         /// </summary>
@@ -40,18 +40,19 @@ namespace OneClickDesktop.BackendClasses.Model
         /// IpAddress of machine (for connection)
         /// </summary>
         public MachineAddress? IpAddress { get; private set; }
-        
+
         /// <summary>
         /// Virtualization server hosting machine
         /// </summary>
         [JsonIgnore]
         public VirtualizationServer ParentServer { get; set; }
-        
+
         /// <summary>
         /// Json constructor
         /// </summary>
         [JsonConstructor]
-        public Machine(string name, MachineState state, MachineType machineType, MachineResources usingResources, User connectedUser, MachineAddress? ipAddress)
+        public Machine(string name, MachineState state, MachineType machineType, MachineResources usingResources,
+                       User connectedUser, MachineAddress? ipAddress)
         {
             Name = name;
             State = state;
@@ -88,9 +89,14 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <summary>
         /// Assign IP ipAddress to machine
         /// </summary>
-        /// <param name="ipAddress">IP address of machine</param>
+        /// <param name="ip">IP address of machine</param>
         public void AssignAddress(MachineAddress ip) => IpAddress = ip;
 
+        /// <summary>
+        /// Checks if other Machine object is equal to this one. Checks if <see cref="Name"/> is equal
+        /// </summary>
+        /// <param name="other">Machine to check against</param>
+        /// <returns>True if Machines are equal, otherwise false</returns>
         public bool Equals(Machine other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -98,14 +104,25 @@ namespace OneClickDesktop.BackendClasses.Model
             return Name.Equals(other.Name);
         }
 
+        /// <summary>
+        /// Returns the hash code of Machine
+        /// </summary>
+        /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
             return Name.GetHashCode();
         }
 
+        /// <summary>
+        /// Checks if other object is equal to this one. Checks if <see cref="Name"/> is equal
+        /// </summary>
+        /// <param name="obj">Object to check against</param>
+        /// <returns>True if objects are equal, otherwise false</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as Machine);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Machine)obj);
         }
     }
 }

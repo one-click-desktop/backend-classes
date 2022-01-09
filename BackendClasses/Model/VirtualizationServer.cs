@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.Resources;
 using OneClickDesktop.BackendClasses.Model.States;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -198,6 +199,12 @@ namespace OneClickDesktop.BackendClasses.Model
         /// <param name="sessionGuid">Session identifier</param>
         public void DeleteSession(Guid sessionGuid) => sessions.Remove(sessionGuid);
 
+        
+        /// <summary>
+        /// Compares this object with other VirtualizationServer object. Comparison is made on <see cref="Guid"/>
+        /// </summary>
+        /// <param name="other">VirtualizationServer object to compare</param>
+        /// <returns>Int representing position of this object compared to other</returns>
         public int CompareTo(VirtualizationServer other)
         {
             if (ReferenceEquals(this, other)) return 0;
@@ -205,6 +212,11 @@ namespace OneClickDesktop.BackendClasses.Model
             return ServerGuid.CompareTo(other.ServerGuid);
         }
 
+        /// <summary>
+        /// Checks if other VirtualizationServer object is equal to this one. Checks if <see cref="Guid"/> is equal
+        /// </summary>
+        /// <param name="other">VirtualizationServer to check against</param>
+        /// <returns>True if VirtualizationServers are equal, otherwise false</returns>
         public bool Equals(VirtualizationServer other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -212,14 +224,25 @@ namespace OneClickDesktop.BackendClasses.Model
             return ServerGuid.Equals(other.ServerGuid);
         }
 
+        /// <summary>
+        /// Returns the hash code of VirtualizationServer
+        /// </summary>
+        /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
             return ServerGuid.GetHashCode();
         }
 
+        /// <summary>
+        /// Checks if other object is equal to this one. Checks if <see cref="Guid"/> is equal
+        /// </summary>
+        /// <param name="obj">Object to check against</param>
+        /// <returns>True if objects are equal, otherwise false</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as VirtualizationServer);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((VirtualizationServer)obj);
         }
     }
 }

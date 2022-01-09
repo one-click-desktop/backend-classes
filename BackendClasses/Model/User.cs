@@ -6,13 +6,13 @@ namespace OneClickDesktop.BackendClasses.Model
     /// <summary>
     /// Stores information about user
     /// </summary>
-    public class User: IComparable<User>, IEquatable<User>
+    public class User : IComparable<User>, IEquatable<User>
     {
         /// <summary>
         /// User identifier
         /// </summary>
         public Guid Guid { get; }
-        
+
         /// <summary>
         /// JWT token for authorization
         /// </summary>
@@ -39,6 +39,11 @@ namespace OneClickDesktop.BackendClasses.Model
             JwtToken = jwtToken;
         }
 
+        /// <summary>
+        /// Compares this object with other User object. Comparison is made on <see cref="Guid"/>
+        /// </summary>
+        /// <param name="other">User object to compare</param>
+        /// <returns>Int representing position of this object compared to other</returns>
         public int CompareTo(User other)
         {
             if (ReferenceEquals(this, other)) return 0;
@@ -46,6 +51,11 @@ namespace OneClickDesktop.BackendClasses.Model
             return Guid.CompareTo(other.Guid);
         }
 
+        /// <summary>
+        /// Checks if other User object is equal to this one. Checks if <see cref="Guid"/> is equal
+        /// </summary>
+        /// <param name="other">User to check against</param>
+        /// <returns>True if Users are equal, otherwise false</returns>
         public bool Equals(User other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -53,14 +63,25 @@ namespace OneClickDesktop.BackendClasses.Model
             return Guid.Equals(other.Guid);
         }
 
+        /// <summary>
+        /// Returns the hash code of User
+        /// </summary>
+        /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
             return Guid.GetHashCode();
         }
 
+        /// <summary>
+        /// Checks if other object is equal to this one. Checks if <see cref="Guid"/> is equal
+        /// </summary>
+        /// <param name="obj">Object to check against</param>
+        /// <returns>True if objects are equal, otherwise false</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as User);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((User)obj);
         }
     }
 }

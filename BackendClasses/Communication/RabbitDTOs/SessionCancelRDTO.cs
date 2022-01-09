@@ -1,6 +1,4 @@
 using System;
-using OneClickDesktop.BackendClasses.Model;
-using OneClickDesktop.BackendClasses.Model.States;
 
 namespace OneClickDesktop.BackendClasses.Communication.RabbitDTOs
 {

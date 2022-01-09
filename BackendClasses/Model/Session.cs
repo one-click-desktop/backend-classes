@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 using OneClickDesktop.BackendClasses.Model.States;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.Model
 {
@@ -13,32 +14,33 @@ namespace OneClickDesktop.BackendClasses.Model
         /// Machine assigned to session
         /// </summary>
         public Machine CorrelatedMachine { get; private set; }
-        
+
         /// <summary>
         /// User assigned to session
         /// </summary>
         public User CorrelatedUser { get; }
-        
+
         /// <summary>
         /// Session identifier
         /// </summary>
         public Guid SessionGuid { get; }
-        
+
         /// <summary>
         /// Session Type
         /// </summary>
         public SessionType SessionType { get; }
-        
+
         /// <summary>
         /// Session state
         /// </summary>
         public SessionState SessionState { get; set; }
-        
+
         /// <summary>
         /// Json constructor
         /// </summary>
         [JsonConstructor]
-        public Session(Machine correlatedMachine, User correlatedUser, Guid sessionGuid, SessionType sessionType, SessionState sessionState)
+        public Session(Machine correlatedMachine, User correlatedUser, Guid sessionGuid, SessionType sessionType,
+                       SessionState sessionState)
         {
             CorrelatedMachine = correlatedMachine;
             CorrelatedUser = correlatedUser;
@@ -85,6 +87,7 @@ namespace OneClickDesktop.BackendClasses.Model
             {
                 throw new ArgumentException("Machine is not free", nameof(machine));
             }
+
             machine.State = MachineState.Reserved;
             CorrelatedMachine = machine;
         }
@@ -97,7 +100,12 @@ namespace OneClickDesktop.BackendClasses.Model
             CorrelatedMachine = null;
             SessionState = SessionState.WaitingForRemoval;
         }
-        
+
+        /// <summary>
+        /// Compares this object with other Session object. Comparison is made on <see cref="SessionGuid"/>
+        /// </summary>
+        /// <param name="other">Session object to compare</param>
+        /// <returns>Int representing position of this object compared to other</returns>
         public int CompareTo(Session other)
         {
             if (ReferenceEquals(this, other)) return 0;
@@ -105,6 +113,11 @@ namespace OneClickDesktop.BackendClasses.Model
             return SessionGuid.CompareTo(other.SessionGuid);
         }
 
+        /// <summary>
+        /// Checks if other Session object is equal to this one. Checks if <see cref="SessionGuid"/> is equal
+        /// </summary>
+        /// <param name="other">Session to check against</param>
+        /// <returns>True if Sessions are equal, otherwise false</returns>
         public bool Equals(Session other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -112,14 +125,25 @@ namespace OneClickDesktop.BackendClasses.Model
             return SessionGuid.Equals(other.SessionGuid);
         }
 
+        /// <summary>
+        /// Returns the hash code of Session
+        /// </summary>
+        /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
             return SessionGuid.GetHashCode();
         }
 
+        /// <summary>
+        /// Checks if other object is equal to this one. Checks if <see cref="SessionGuid"/> is equal
+        /// </summary>
+        /// <param name="obj">Object to check against</param>
+        /// <returns>True if objects are equal, otherwise false</returns>
         public override bool Equals(object obj)
         {
-            return Equals(obj as Session);
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == this.GetType() && Equals((Session)obj);
         }
     }
 }

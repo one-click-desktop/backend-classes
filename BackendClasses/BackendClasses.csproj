@@ -3,19 +3,16 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>OneClickDesktop.BackendClasses</RootNamespace>
-    <AssemblyName>OneClickDesktop.BackendClasses</AssemblyName>
     <PackageId>OneClickDesktop.BackendClasses</PackageId>
-    <Authors>smogork widomskip</Authors>
+    <Title>OneClickDesktop.BackendClasses</Title>
+    <Authors>Smogork, Widomskip</Authors>
     <Description>Common classes for OneClickDesktop backend</Description>
+    <PackageProjectUrl>https://github.com/one-click-desktop/backend-classes</PackageProjectUrl>
     <RepositoryUrl>https://github.com/one-click-desktop/backend-classes</RepositoryUrl>
+    <AssemblyName>OneClickDesktop.BackendClasses</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\net5.0\BackendClasses.xml</DocumentationFile>
-  </PropertyGroup>
-
 </Project>

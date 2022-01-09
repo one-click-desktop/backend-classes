@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using OneClickDesktop.BackendClasses.Model;
+using OneClickDesktop.BackendClasses.Model.Types;
 
 namespace OneClickDesktop.BackendClasses.ModelTests.SystemModelTests
 {
