@@ -1,22 +1,36 @@
 ﻿using System;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace OneClickDesktop.BackendClasses.Model.Resources
 {
     /// <summary>
-    /// Class describing PCI identifier as pair of vendor and device identifiers
+    /// Class describing PCI identifier as combination of domain, bus, slot and function ids. Format is similar to lspci
     /// </summary>
     public class PciAddressId : IEquatable<PciAddressId>
     {
-        private static readonly Regex addressRegexp =
+        private static readonly Regex AddressRegexp =
             new Regex(
                 @"^(?<domain>[0-9a-fA-F]{4}):(?<bus>[0-9a-fA-F]{2}):(?<slot>[0-9a-fA-F]{2})\.(?<function>[0-9a-fA-F]{1})$");
 
+        /// <summary>
+        /// PCI device domain
+        /// </summary>
         public string Domain { get; set; }
+
+        /// <summary>
+        /// PCI device bus
+        /// </summary>
         public string Bus { get; set; }
+
+        /// <summary>
+        /// PCI device slot
+        /// </summary>
         public string Slot { get; set; }
+
+        /// <summary>
+        /// PCI device function
+        /// </summary>
         public string Function { get; set; }
 
 
@@ -54,16 +68,16 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
 
         /// <summary>
         /// Try to parse PCI address from string representation in format '{domain:4}:{bus:2}:{slot:2}.{function:1}'.
-        /// All groups are hexadecimal numbers without prefix.
+        /// All groups are hexadecimal numbers without prefix
         /// </summary>
         /// <param name="address">String representation of PCI address</param>
         /// <param name="pciAddressId">Parsed PCI address if successful, otherwise null</param>
-        /// <returns>Bool indicating whether parse successed</returns>
+        /// <returns>Bool indicating whether parse succeed</returns>
         public static bool TryParse(string address, out PciAddressId pciAddressId)
         {
             pciAddressId = null;
 
-            var match = addressRegexp.Match(address);
+            var match = AddressRegexp.Match(address);
             if (!match.Success)
             {
                 return false;
@@ -74,6 +88,11 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
             return true;
         }
 
+        /// <summary>
+        /// Checks if other PCI address is equal to this one. Comparison is based on string representation of PCI address
+        /// </summary>
+        /// <param name="other">PCI address to check against</param>
+        /// <returns>True if PCI addresses are equal, otherwise false</returns>
         public bool Equals(PciAddressId other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -81,11 +100,20 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
             return ToString() == other.ToString();
         }
 
+        /// <summary>
+        /// Converts PCI address to string representation in format '{domain}:{bus}:{slot}.{function}'
+        /// </summary>
+        /// <returns>PCI address string representation</returns>
         public override string ToString()
         {
             return $"{Domain}:{Bus}:{Slot}.{Function}";
         }
 
+        /// <summary>
+        /// Checks if other object is equal to this one. Comparison is based on string representation of PCI address
+        /// </summary>
+        /// <param name="obj">Object to check against</param>
+        /// <returns>True if objects are equal, otherwise false</returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -93,6 +121,10 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
             return obj.GetType() == this.GetType() && Equals((PciAddressId)obj);
         }
 
+        /// <summary>
+        /// Returns the hash code of this PCI address
+        /// </summary>
+        /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
