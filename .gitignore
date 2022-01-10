@@ -364,3 +364,13 @@ FodyWeavers.xsd
 
 #Idea
 /.idea
+
+#DocsFX
+/**/DROP/
+/**/TEMP/
+/**/packages/
+/**/bin/
+/**/obj/
+_site
+_site_pdf
+api/
