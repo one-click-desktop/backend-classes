@@ -48,7 +48,7 @@ namespace OneClickDesktop.BackendClasses.Model.Types
         }
 
         /// <summary>
-        /// Checks if other MachineType object is equal to this one. Checks if all fields are equal
+        /// Checks if other MachineType object is equal to this one. Checks if <see cref="TechnicalName"/> is equal.
         /// </summary>
         /// <param name="other">MachineType to check against</param>
         /// <returns>True if MachineTypes are equal, otherwise false</returns>
@@ -56,7 +56,7 @@ namespace OneClickDesktop.BackendClasses.Model.Types
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return TechnicalName == other.TechnicalName && HumanReadableName == other.HumanReadableName;
+            return TechnicalName == other.TechnicalName;
         }
 
         /// <summary>
