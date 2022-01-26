@@ -61,7 +61,7 @@ namespace OneClickDesktop.BackendClasses.Model.Resources
         /// <returns>32-bit signed integer hash code</returns>
         public override int GetHashCode()
         {
-            return PciIdentifiers.GetHashCode();
+            return PciIdentifiers.Aggregate(0, (sum, id) => sum ^ id.GetHashCode());
         }
 
         /// <summary>
